@@ -1,0 +1,21 @@
+
+services:
+  vllm:
+    image: 3fc3c31cc0f8
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    security_opt:
+      - seccomp:unconfined
+    ipc: 
+      "host"
+    ports: 
+      - "8000:8000"
+    environment: 
+      MODE: serve
+      MODEL: "amd/Llama-3.1-8B-Instruct-FP8-KV"
+      PORT: 8000
+      VLLM_LOGGING_LEVEL: DEBUG
+      ARGS: "--enforce-eager"
+    volumes:
+      - /shared/huggingface
