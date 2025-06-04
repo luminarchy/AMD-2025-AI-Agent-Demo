@@ -10,6 +10,8 @@ RUN pip3 install --no-cache-dir \
     accelerate \
     safetensors
 
+WORKDIR /home/amysuo12/amd2025test
+
 # Create directories for models and benchmarks
 RUN mkdir -p /data/benchmarks && \
    chmod 777 /data/benchmarks
