@@ -1,11 +1,14 @@
 
 services:
   vllm:
-    image: 3fc3c31cc0f8
+  # model: /shared/huggingface/hub/models--amd--Llama-3.1-8B-Instruct-FP8-KV/
+    image: vllm-toolkit:latest
+    #context: ../../../
+
+
     devices:
       - /dev/kfd
       - /dev/dri
-      - /dev/mem
     security_opt:
       - seccomp:unconfined
     
@@ -20,11 +23,27 @@ services:
     cap_add:
       - SYS_PTRACE
     environment: 
+      HIP_VISIBLE_DEVICES: 2
       MODE: serve
-      MODEL: "amd/Llama-3.1-8B-Instruct-FP8-KV"
+      MODEL: "llama2-70b-chat-hf/orig"
       PORT: 8000
       VLLM_LOGGING_LEVEL: DEBUG
       ARGS: "--enforce-eager"
 
     volumes:
-      - /shared/huggingface
+      - /shared/inference/model/
+  
+  # open-webui:
+  #   image: ghcr.io/open-webui/open-webui:main
+
+  #   ports:
+  #     - "3000:8000"
+
+  #   volumes:
+  #     - open-webui:/app/backend/data
+  #   devices:
+  #     - /dev/kfd
+  #     - /dev/dri
+  #   environment:
+  #     OLLAMA_BASE_URL: http://localhost:11434/
+      
