@@ -2,7 +2,7 @@
 services:
   vllm:
   # model: /shared/huggingface/hub/models--amd--Llama-3.1-8B-Instruct-FP8-KV/
-    image: vllm-toolkit:latest
+    image: rocm/vllm-dev:nightly
     #context: ../../../
 
 
@@ -23,27 +23,30 @@ services:
     cap_add:
       - SYS_PTRACE
     environment: 
-      HIP_VISIBLE_DEVICES: 2
-      MODE: serve
-      MODEL: "llama2-70b-chat-hf/orig"
+      HIP_VISIBLE_DEVICES: 1
+      # MODE: serve
+      # MODEL: "llama2-70b-chat-hf/orig"
       PORT: 8000
-      VLLM_LOGGING_LEVEL: DEBUG
-      ARGS: "--enforce-eager"
+      # ARGS: "--enforce-eager"
+      HF_HUB_CACHE: /hf_home
 
     volumes:
-      - /shared/inference/model/
-  
-  # open-webui:
-  #   image: ghcr.io/open-webui/open-webui:main
+      - /shared/huggingface:/hf_home
+    command: ["/bin/sh", "-c", "vllm serve amd/Llama-3.3-70B-Instruct-FP8-KV"]
+  # ["sh", "-c", "while true; do sleep 1000; done"]
+    
+  #vllm serve amd/Llama-3.2-1B-FP8-KV
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
 
-  #   ports:
-  #     - "3000:8000"
+    ports:
+      - "3000:8080"
 
-  #   volumes:
-  #     - open-webui:/app/backend/data
-  #   devices:
-  #     - /dev/kfd
-  #     - /dev/dri
-  #   environment:
-  #     OLLAMA_BASE_URL: http://localhost:11434/
-      
+    volumes:
+      - /home/amysuo12/amd2025test/open-webui:/app/backend/data
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    environment:
+      OPENAI_API_BASE_URL: http://vllm:8000/v1
+
