@@ -2,7 +2,7 @@
 services:
   vllm:
   # model: /shared/huggingface/hub/models--amd--Llama-3.1-8B-Instruct-FP8-KV/
-    image: rocm/vllm-dev:nightly
+    image: rocm/vllm:latest
     #context: ../../../
 
 
@@ -16,16 +16,16 @@ services:
       - "video"
       - "render"
     ipc: 
-      "host"
+      "shareable"
     ports: 
       - "8000:8000"
-
     cap_add:
       - SYS_PTRACE
     environment: 
       HIP_VISIBLE_DEVICES: 1
       # MODE: serve
       # MODEL: "llama2-70b-chat-hf/orig"
+      HOST: 8000
       PORT: 8000
       # ARGS: "--enforce-eager"
       HF_HUB_CACHE: /hf_home
@@ -40,7 +40,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
 
     ports:
-      - "3000:8080"
+      - "2000:8080"
 
     volumes:
       - /home/amysuo12/amd2025test/open-webui:/app/backend/data
