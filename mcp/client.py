@@ -1,7 +1,7 @@
 from llama_index.tools.mcp import BasicMCPClient, McpToolSpec
 
 # MCP server configuration
-MCP_URL = "http://localhost:8000/sse"
+MCP_URL = "http://localhost:8001/sse"
 
 client = BasicMCPClient(MCP_URL)
 print(f"Connecting to MCP server at {MCP_URL}...")
