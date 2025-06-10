@@ -3,7 +3,7 @@ import asyncio
 import os
 import argparse
 
-mcp = FastMCP()
+mcp = FastMCP("Test server")
 
 @mcp.tool()
 def hello_world(name: str = "World"):
