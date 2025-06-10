@@ -18,15 +18,15 @@ services:
     ipc: 
       "shareable"
     ports: 
-      - "8000:8000"
+      - "8002:8002"
     cap_add:
       - SYS_PTRACE
     environment: 
-      HIP_VISIBLE_DEVICES: 1
+      HIP_VISIBLE_DEVICES: 2
       # MODE: serve
       # MODEL: "llama2-70b-chat-hf/orig"
-      HOST: 8000
-      PORT: 8000
+      HOST: 8002
+      PORT: 8002
       # ARGS: "--enforce-eager"
       HF_HUB_CACHE: /hf_home
 
@@ -40,7 +40,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
 
     ports:
-      - "2000:8080"
+      - "3000:8080"
 
     volumes:
       - /home/amysuo12/amd2025test/open-webui:/app/backend/data
@@ -48,5 +48,6 @@ services:
       - /dev/kfd
       - /dev/dri
     environment:
-      OPENAI_API_BASE_URL: http://vllm:8000/v1
+      HIP_VISIBLE_DEVICES: 2
+      OPENAI_API_BASE_URL: http://vllm:8002/v1
 

@@ -3,6 +3,7 @@ import asyncio
 import os
 import argparse
 
+
 mcp = FastMCP("Test server")
 
 @mcp.tool()
@@ -28,4 +29,4 @@ def add(a: int, b: int):
 
 if __name__ == "__main__":
     print("Starting MCP server on default port...")
-    mcp.run(transport = "sse", host = "127.0.0.1", port = 8001)
+    mcp.run()
