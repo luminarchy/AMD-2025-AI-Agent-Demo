@@ -4,12 +4,13 @@ import json
 import base64
 # smitery: 357f2a7e-1797-4875-9964-7a46c6d35a08
 # balldontlie: a6cfa536-43b1-4edb-9f9b-04f351dc8087
+# command to start for amy: mcpo --port 8004 -- npx -y @smithery/cli@latest run @mikechao/balldontlie-mcp --key f6364c70-c3e1-4f93-9624-887ff01c8943 --profile narrow-hamster-nO6iEx
 config = {
-  "balldontlieApiKey": "b4d9c384-9f59-4165-947c-794519cc1f3c"
+  "balldontlieApiKey": "string"
 }
 # Encode config in base64
 config_b64 = base64.b64encode(json.dumps(config).encode())
-smithery_api_key = "357f2a7e-1797-4875-9964-7a46c6d35a08"
+smithery_api_key = "f6364c70-c3e1-4f93-9624-887ff01c8943"
 
 # Create server URL
 url = f"https://server.smithery.ai/@mikechao/balldontlie-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
