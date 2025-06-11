@@ -6,14 +6,15 @@ import base64
 # balldontlie: a6cfa536-43b1-4edb-9f9b-04f351dc8087
 # command to start for amy: mcpo --port 8004 -- npx -y @smithery/cli@latest run @mikechao/balldontlie-mcp --key f6364c70-c3e1-4f93-9624-887ff01c8943 --profile narrow-hamster-nO6iEx
 config = {
-  "balldontlieApiKey": "string"
+  "balldontlieApiKey": "a6cfa536-43b1-4edb-9f9b-04f351dc8087"
 }
 # Encode config in base64
 config_b64 = base64.b64encode(json.dumps(config).encode())
 smithery_api_key = "f6364c70-c3e1-4f93-9624-887ff01c8943"
+profileId = "narrow-hamster-nO6iEx"
 
 # Create server URL
-url = f"https://server.smithery.ai/@mikechao/balldontlie-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+url = f"https://server.smithery.ai/@mikechao/balldontlie-mcp/mcp?config={config_b64}&api_key={smithery_api_key}&profile={profileId}"
 
 async def main():
     # Connect to the server using HTTP client
