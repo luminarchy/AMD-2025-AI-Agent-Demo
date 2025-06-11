@@ -49,6 +49,23 @@
 
 <!-- USAGE EXAMPLES -->
 
+1. Clone the repo
+   ```sh
+   git clone https://github.com/github_username/repo_name.git
+   ```
+2. Install npm packages
+   ```sh
+   sudo apt install npm
+   ```
+3. Install mcp packages
+   ```js
+   const API_KEY = 'ENTER YOUR API';
+   ```
+4. Change git remote url to avoid accidental pushes to base project
+   ```sh
+   git remote set-url origin github_username/repo_name
+   git remote -v # confirm the changes
+   ```
 
 ## Usage
 

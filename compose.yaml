@@ -16,7 +16,7 @@ services:
       - "video"
       - "render"
     ipc: 
-      "shareable"
+      "host"
     ports: 
       - "8000:8000"
     cap_add:
@@ -40,7 +40,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
 
     ports:
-      - "2000:8080"
+      - "3000:8080"
 
     volumes:
       - /home/amysuo12/amd2025test/open-webui:/app/backend/data
