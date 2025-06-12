@@ -2,7 +2,7 @@
 
 # Base configuration with defaults
 MODE=${MODE:-"serve"}
-MODEL=${MODEL:-"amd/Llama-3.2-1B-FP8-KV"}
+MODEL=${MODEL:-"model-name"}
 PORT=${PORT:-3000}
 
 # Benchmark configuration with defaults

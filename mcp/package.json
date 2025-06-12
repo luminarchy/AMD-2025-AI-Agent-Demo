@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1",
-    "@smithery/sdk": "^1.5.2",
-    "esrun": "^3.2.30"
-  }
-}
