@@ -16,19 +16,8 @@ def add(a: int, b: int):
     """Add two numbers."""
     return a + b
 
-# async def run_search(params):
-#     """Run SerpAPI search asynchronously"""
-#     try:
-#         logger.debug(f"Sending SerpAPI request with params: {json.dumps(params, indent=2)}")
-#         result = await asyncio.to_thread(lambda: GoogleSearch(params).get_dict())
-#         logger.debug(f"SerpAPI response received, keys: {list(result.keys())}")
-#         return result
-#     except Exception as e:
-#         logger.exception(f"SerpAPI search error: {str(e)}")
-#         return {"error": str(e)}
-
 if __name__ == "__main__":
     print("Starting MCP server on default port...")
     mcp.run()
 
-# mcpo --port 8002 -- python server.py
+# command to run: mcpo --port 8002 -- python server.py

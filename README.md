@@ -108,7 +108,7 @@ pip install mcpo
 Then run:
 
 ```sh
-mcpo --port 8004 -- python server.py
+mcpo --port 8002 -- python server.py
 ```
 
 **If you are hosting an MCP server from Smithery.ai**

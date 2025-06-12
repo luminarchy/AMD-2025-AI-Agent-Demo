@@ -1,9 +1,7 @@
 
 services:
   vllm:
-  # model: /shared/huggingface/hub/models--amd--Llama-3.1-8B-Instruct-FP8-KV/
     image: rocm/vllm:latest
-    #context: ../../../
     devices:
       - /dev/kfd
       - /dev/dri
@@ -25,14 +23,8 @@ services:
       # NCCL_DEBUG: INFO
       # NCCL_CUMEM_ENABLE: 0
       # NCCL_IB_DISABLE: 1
-      # MODE: serve
-      # MODEL: "llama2-70b-chat-hf/orig"
       HOST: 8001
       PORT: 8001
-      # TENSOR_PARALLEL_SIZE: 16
-      # GPU_MEMORY_UTILIZATION: .95
-      # MAX_NUM_SEQS: 256
-      # MAX_MODEL_LEN: 8192
       HF_HUB_CACHE: /hf_home
 
     volumes:
@@ -42,9 +34,10 @@ services:
               "vllm serve Salesforce/Llama-xLAM-2-70b-fc-r 
               --enforce-eager 
               --gpu-memory-utilization 0.95 --max-model-len 74000"]
-  # ["sh", "-c", "while true; do sleep 1000; done"]
+      # --tensor-parallel=size 8
+      # --max-num-seqs: 54
+      # --max-model-len
     
-  #vllm serve amd/Llama-3.2-1B-FP8-KV
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
 
