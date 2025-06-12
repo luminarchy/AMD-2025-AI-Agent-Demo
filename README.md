@@ -28,8 +28,6 @@ meow
       <ul>
         <li><a href="#examples">Examples</a></li>
       </ul></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -150,21 +148,6 @@ Command line logs with requests to the skeleton test server.
 
 * ![logs](assets/mcplogs.png)
 
-<!-- ROADMAP -->
-
-## 🌟 Roadmap 🌟
-
-- [ ] Full MCP server
-- [ ] support for multiple gpus
-- [ ] stuff
-- [ ] more stuff
-- [ ] finish this readme
-
-<!-- CONTRIBUTING -->
-
-## 🌟 Contributing 🌟
-
-idk what to put here
 
 ## 🌟 License 🌟
 
