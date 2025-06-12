@@ -38,7 +38,7 @@ meow
 
 ## 🌟 About The Project 🌟
 
-Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. MCPs, introduced by ANthropic in 2024, are an open-source framework that universalizes the way that AI agents integrate into systems. The design works similar to REST API and provides an interface that allows models to interact with data and context. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also has a skeleton MCP server that can be integrated with OpenWebUI.
+Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. The  open-source framework works similar to REST API and provides an interface that allows models to interact with data and context, universalizing the way that AI agents integrate into systems. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also contains a skeleton MCP server that can be integrated with OpenWebUI.
 
 ### ✨ Built With ✨
 
