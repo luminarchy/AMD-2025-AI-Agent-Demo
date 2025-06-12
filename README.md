@@ -175,6 +175,8 @@ i also do not know what to put here
 ## 🌟 Contact 🌟
 
 Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
+
+
 Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
 
 <!-- ACKNOWLEDGMENTS -->
