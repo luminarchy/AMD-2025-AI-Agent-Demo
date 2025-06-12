@@ -1,10 +1,15 @@
 <div align="center">
 
-<h1>Voice AI Agent</h1>
+<h1> ⭐  AMD AI Agent ⭐ </h1>
+meow
 <div align="left">
 
+
+
+<!-- TABLE OF CONTENTS -->
+
 <details>
-  <summary>Table of Contents</summary>
+  <summary>✨ Table of Contents ✨ </summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -19,7 +24,10 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#examples">Examples</a></li>
+      </ul></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -30,26 +38,26 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## 🌟 About The Project 🌟
 
 Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. MCPs, introduced by ANthropic in 2024, are an open-source framework that universalizes the way that AI agents integrate into systems. The design works similar to REST API and provides an interface that allows models to interact with data and context. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also has a skeleton MCP server that can be integrated with OpenWebUI.
 
-### Built With
+### ✨ Built With ✨
+
+* not entirely sure what to put here
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## 🌟 Getting Started 🌟
 
-### Prerequisites
+### ✨ Prerequisites ✨
 
 * **Linux**: see the [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems).
 * **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html).
 * **GPU**: AMD Instinct™ MI300X accelerator or [other ROCm-supported GPUs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html).
 * **Docker**: with Docker Compose - [install](https://docs.docker.com/engine/install/).
 
-### Installation
-
-<!-- USAGE EXAMPLES -->
+### ✨ Installation ✨
 
 1. Clone the repo
    
@@ -98,7 +106,9 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
    docker compose down
    ```
 
-**If you are hosting your own MCP server**
+## 🌟 Usage 🌟
+
+✨ **If you are hosting your own MCP server**
 The skeleton server is stored in the MCP file in `server.py`. To start the server, first install MCPO using pip:
 
 ```sh
@@ -111,7 +121,7 @@ Then run:
 mcpo --port 8002 -- python server.py
 ```
 
-**If you are hosting an MCP server from Smithery.ai**
+✨ **If you are hosting an MCP server from Smithery.ai**
 Install the server using auto install. You may have to install npm first.
 
 ```sh
@@ -126,7 +136,7 @@ mcpo --port 8004 -- <server start up command>
 
 The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the url ``
 
-## Usage
+### ✨ Examples ✨
 
 This is the Open WebUI with two available MCP servers, the skeleton server `server.py` and the [Balldontlie server at smithery](https://smithery.ai/server/@mikechao/balldontlie-mcp "https://smithery.ai/server/@mikechao/balldontlie-mcp"),
 
@@ -139,4 +149,41 @@ This is the response from the AI agent when using an MCP tool from the `Balldont
 Command line logs with requests to the skeleton test server.
 
 * ![logs](assets/mcplogs.png)
+
+<!-- ROADMAP -->
+
+## 🌟 Roadmap 🌟
+
+- [ ] Full MCP server
+- [ ] support for multiple gpus
+- [ ] stuff
+- [ ] more stuff
+- [ ] finish this readme
+
+<!-- CONTRIBUTING -->
+
+## 🌟 Contributing 🌟
+
+idk what to put here
+
+## 🌟 License 🌟
+
+i also do not know what to put here
+
+<!-- CONTACT -->
+
+## 🌟 Contact 🌟
+
+Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
+Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
+
+<!-- ACKNOWLEDGMENTS -->
+
+## 🌟 Acknowledgments 🌟
+
+* [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
+* [Smithery](https://smithery.ai/)
+* [BallDontLie API](https://www.balldontlie.io/)
+* [BallDontLie MCP Server](https://github.com/mikechao/balldontlie-mcp)
+* Furthermore i do not know what to put here
 
