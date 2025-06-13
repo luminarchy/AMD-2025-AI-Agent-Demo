@@ -136,7 +136,7 @@ The MCP server should automatically connect to the running OpenWebUI image. If i
 
 ### ✨ Examples ✨
 
-This is the Open WebUI with two available MCP servers, the skeleton server `server.py` and the [Balldontlie server at smithery](https://smithery.ai/server/@mikechao/balldontlie-mcp "https://smithery.ai/server/@mikechao/balldontlie-mcp"),
+This is the Open WebUI with two available MCP servers: the skeleton server `server.py` and the [Balldontlie server at smithery](https://smithery.ai/server/@mikechao/balldontlie-mcp "https://smithery.ai/server/@mikechao/balldontlie-mcp"),
 
 * ![tools](assets/toolservers.png)
 

@@ -18,25 +18,31 @@ services:
     cap_add:
       - SYS_PTRACE
     environment: 
-      HIP_VISIBLE_DEVICES: 1,2
-      # ROCR_VISIBLE_DEVICES: 1,3
-      # NCCL_DEBUG: INFO
-      # NCCL_CUMEM_ENABLE: 0
-      # NCCL_IB_DISABLE: 1
-      HOST: 8001
-      PORT: 8001
+      HIP_VISIBLE_DEVICES: 0,1
+      ROCR_VISIBLE_DEVICES: 0,1
+
+      # one of these makes it work and idk which ones
+      VLLM_SKIP_P2P_CHECK: 1
+      NCCL_CUMEM_ENABLE: 0
+      NCCL_IB_DISABLE: 1
+      HSA_ENABLE_IPC_MODE_LEGACY: 0
+      # why not have all of them 
+
       HF_HUB_CACHE: /hf_home
 
     volumes:
       - /shared/huggingface:/hf_home
     command: ["/bin/sh", 
               "-c", 
-              "vllm serve Salesforce/Llama-xLAM-2-70b-fc-r 
+              "vllm serve amd/Llama-3.3-70B-Instruct-FP8-KV 
+              --port 8001
               --enforce-eager 
-              --gpu-memory-utilization 0.95 --max-model-len 74000"]
-      # --tensor-parallel=size 8
-      # --max-num-seqs: 54
-      # --max-model-len
+              --gpu-memory-utilization 0.95
+              
+              "]
+      # --tensor-parallel-size 2
+      # --max-model-len 74782
+      #Salesforce/Llama-xLAM-2-70b-fc-r
     
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
