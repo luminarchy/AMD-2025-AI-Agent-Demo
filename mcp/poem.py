@@ -44,7 +44,16 @@ async def get_poem_title(poem: str):
 
 @mcp.tool()
 async def get_poems_keyword(keyword: str): 
-    """searches for poems with keyword in title."""
+    """searches for poems that contain specific keyword."""
+    try: 
+        result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + keyword).json())
+        return result
+    except Exception as e:
+        logger.exception(f"poetrydb search error: {str(e)}")
+
+@mcp.tool()
+async def get_poems_keyword(keyword: str): 
+    """searches for poems that contain specific keyword and return the titles of those poems."""
     try: 
         result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + keyword + "/title").json())
         return result
@@ -55,7 +64,7 @@ async def get_poems_keyword(keyword: str):
 async def get_poems_line(line: str): 
     """searches for poems with a specific line."""
     try: 
-        result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line + output_field).json())
+        result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line).json())
         return result
     except Exception as e:
         logger.exception(f"poetrydb search error: {str(e)}")
