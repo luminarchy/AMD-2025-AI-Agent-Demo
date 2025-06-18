@@ -1,4 +1,4 @@
-from fastmcp import FastMCP
+from fastmcp import FastMCP, Context
 import asyncio
 import requests
 import logging
@@ -93,6 +93,14 @@ def register_poems(mcp):
         try: 
             result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + keyword).json())
             return result
+        except requests.HTTPError as e:
+            with engine.connect() as conn, conn.begin():
+                poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\"", conn)
+            if poe.shape[0] == 0:
+                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                raise Exception
+            else:
+                return f.format_entries(poe)
         except Exception as e:
             logger.exception(f"poetrydb search error: {str(e)}")
 
@@ -103,6 +111,32 @@ def register_lines(mcp):
         try: 
             result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line).json())
             return result
+        except requests.HTTPError as e:
+            with engine.connect() as conn, conn.begin():
+                poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + line + "%\"", conn)
+            if poe.shape[0] == 0:
+                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                raise Exception
+            else:
+                return f.format_entries(poe)
+        except Exception as e:
+            logger.exception(f"poetrydb search error: {str(e)}")
+
+def register_lines(mcp):
+    @mcp.tool()
+    async def get_poems_line(line: str): 
+        """searches for poems with a specific line."""
+        try: 
+            result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line + "/title").json())
+            return result
+        except requests.HTTPError as e:
+            with engine.connect() as conn, conn.begin():
+                poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + line + "%\"", conn)
+            if poe.shape[0] == 0:
+                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                raise Exception
+            else:
+                return f.format_list(poe)
         except Exception as e:
             logger.exception(f"poetrydb search error: {str(e)}")
 
@@ -121,14 +155,61 @@ def register_lines(mcp):
 
 
     @mcp.tool()
-    async def get_linecount(count: str, args: list[str]): 
-        """given a specific linecount and output format, searches for poems with a specific line and returns the specific parameters of the data."""
+    async def get_linecount(count: str): 
+        """given a specific linecount and output format, searches for poems and returns the specific parameters of the data."""
         try: 
             output_field = ""
-            if args != []:
-                output_field += "/"
-                output_field += ",".join(args)
-            result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + count + output_field).json())
+            result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + count).json())
             return result
         except Exception as e:
             logger.exception(f"poetrydb search error: {str(e)}")
+    
+def register_tags(mcp):
+    @mcp.tool()
+    def get_tag(tag: str):
+        """searches for poems that have a specific theme, images, and categories."""
+        try: 
+            with engine.connect() as conn, conn.begin():
+                poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + tag + "%\"", conn)
+            if poe.shape[0] == 0:
+                logger.exception(f"poetry foundation cannot find any poems under tag '{tag}'")
+                raise Exception
+            else: 
+                return f.format_entries(poe)
+        except Exception as e:
+            logger.exception(f"search error: {str(e)}")
+
+    @mcp.tool()
+    async def get_reference(authors: list[str], tags: list[str], keywords: list[str], ctx: Context):
+        """searches for poems to refer to the user as inspiration or reccommended reading, based on context 
+        and any authors, tags or keywords they are looking for or have a preference for"""
+        sql = ("SELECT poemsf.* FROM poemsf WHERE ")
+        result = []
+        with engine.connect() as conn, conn.begin():
+            if authors: 
+                auth = sql + "(Poet LIKE \"%"
+                auth += "%\" OR Poet LIKE \"%".join(authors)
+                auth += "%\") "
+                poe = pd.read_sql_query(auth, conn)
+                result += f.format_entries(poe)
+            if tags:
+                tag += sql + "(Tags LIKE \"%"
+                tag += "%\" OR Tags LIKE \"%".join(authors)
+                tag += "\"%) "
+                poe = pd.read_sql_query(tag, conn)
+                result += f.format_entries(poe)
+        if len(result) == 0:
+            try: 
+                result = await asyncio.to_thread(lambda:requests.get(url+"/random").json())
+            except Exception as e:
+                logger.exception(f"poetryDB error: {e}")
+        return result
+
+
+
+
+
+
+        
+        
+    
