@@ -51,65 +51,65 @@ def register_authors(mcp, url, engine):
 
 def register_poems(mcp, engine):
     @mcp.tool()
-    async def get_poem_title(poem: str): 
+    async def get_poem_title(poem: str, author: str = ""): 
         """gets a poem by the title."""
         
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Title LIKE \"%" + poem + "%\"", conn)
+            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Title LIKE \"%" + poem + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
             if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                logger.exception(f"poetry foundation invalid poem name: {poem}")
                 return "Not Found"
             elif poe.shape[0] != 1:
-                return ("There are multiple authors found in the database: " + f.format_list(poe) + ". Which one did you mean?")
+                return ("There are multiple poems found in the database: " + f.format_list(poe[0]) + ". Which one did you mean?")
             else:
                 return f.format_entry(poe)
 
 
     @mcp.tool()
-    async def get_poems_keyword_titles(keyword: str): 
-        """searches for poems that contain specific keyword and return the titles of those poems."""
+    async def get_poems_keyword_titles(keyword: str, author: str = "", tag = ""): 
+        """searches for the titles of poems that contain specific keyword."""
     
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\"", conn)
+            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tag LIKE \"%" + tag + "%\"", conn)
             if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                logger.exception(f"poetry foundation invalid keyword: {keyword}")
                 return "Not Found"
             else:
                 return f.format_list(poe)
  
 
     @mcp.tool()
-    async def get_poems_keyword(keyword: str): 
+    async def get_poems_keyword(keyword: str, author: str = "", tag = ""): 
         """searches for poems that contain specific keyword."""
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\"", conn)
+            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tag LIKE \"%" + tag + "%\"", conn)
             if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                logger.exception(f"poetry foundation invalid keyword: {keyword}")
                 return "Not Found"
             else:
                 return f.format_entries(poe)
     
 def register_lines(mcp, url, engine):
     @mcp.tool()
-    async def get_poems_line(line: str): 
+    async def get_poems_line(line: str, author: str = ""): 
         """searches for poems with a specific line."""
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + line + "%\"", conn)
+            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
             if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                logger.exception(f"poetry foundation invalid poem name: {line}")
                 return "Not Found"
             else:
                 return f.format_entries(poe)
 
 
     @mcp.tool()
-    async def get_line_title(line: str): 
-        """searches for poems with a specific line."""
+    async def get_line_title(line: str, author: str = ""): 
+        """searches for title of poems with a specific line."""
         
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + line + "%\"", conn)
+            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
             if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {str(e)}")
+                logger.exception(f"poetry foundation invalid poem name: {line}")
                 return "Not Found"
             else:
                 return f.format_list(poe)
@@ -141,10 +141,10 @@ def register_lines(mcp, url, engine):
     
 def register_tags(mcp, url, engine):
     @mcp.tool()
-    def get_tag(tag: str):
+    def get_tag(tag: str, author: str = ""):
         """searches for poems that have a specific theme, images, and categories."""
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + tag + "%\"", conn)
+            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + tag + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation cannot find any poems under tag '{tag}'")
                 raise Exception

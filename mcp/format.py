@@ -9,7 +9,7 @@ def format_list(list: pandas.DataFrame):
 
 
 def format_entry(entry: pandas.DataFrame):
-    poem = {"Title": entry[0][0], "Poem": entry[1][0], "Poet": entry[2][0], "Tags": entry[3][0]}
+    poem = {"Title": entry["Title"][0], "Poem": entry["Poem"][0], "Poet": entry["Poet"][0], "Tags": entry["Tags"][0]}
     return poem
 
 def format_entries(entries: pandas.DataFrame):
