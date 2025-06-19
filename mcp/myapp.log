@@ -301,3 +301,203 @@ INFO:poemtools:setup ended
 INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
 INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poems_keyword': (sqlite3.OperationalError) no such column: Tag
+[SQL: SELECT * FROM poemsf WHERE Poem LIKE "%bethlehem%" AND Poet LIKE "%yeats%" AND Tag LIKE "%%"]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: Tag
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 85, in get_poems_keyword
+    poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tag LIKE \"%" + tag + "%\"", conn)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/io/sql.py", line 528, in read_sql_query
+    return pandas_sql.read_query(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/io/sql.py", line 1848, in read_query
+    result = self.execute(sql, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/io/sql.py", line 1671, in execute
+    return self.con.exec_driver_sql(sql, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1775, in exec_driver_sql
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: Tag
+[SQL: SELECT * FROM poemsf WHERE Poem LIKE "%bethlehem%" AND Poet LIKE "%yeats%" AND Tag LIKE "%%"]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poems_keyword': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 90, in get_poems_keyword
+    return f.format_entries(poe)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 17, in format_entries
+    poems = format_list(entries.apply(format_entry, axis = 1))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poems_keyword': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 90, in get_poems_keyword
+    return f.format_entries(poe)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 17, in format_entries
+    poems = format_list(entries.apply(format_entry, axis = 1))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poems_keyword': The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 90, in get_poems_keyword
+    return f.format_entries(poe)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 17, in format_entries
+    if entries.count(0) > 1:
+       ^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/generic.py", line 1577, in __nonzero__
+    raise ValueError(
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_tag': 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 218, in run
+    result = type_adapter.validate_python(arguments)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py", line 421, in validate_python
+    return self.validator.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 152, in get_tag
+    return f.format_entries(poe)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 18, in format_entries
+    poems = (entries.apply(format_entry, axis = 1))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/frame.py", line 10381, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 916, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 1063, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 1081, in apply_series_generator
+    results[i] = self.func(v, *self.args, **self.kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 12, in format_entry
+    poem = {"Title": entry["Title"][0], "Poem": entry["Poem"][0], "Poet": entry["Poet"][0], "Tags": entry["Tags"][0]}
+                                                ~~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_tag': 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 218, in run
+    result = type_adapter.validate_python(arguments)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py", line 421, in validate_python
+    return self.validator.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 152, in get_tag
+    return f.format_entries(poe)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 18, in format_entries
+    poems = (entries.apply(format_entry, axis = 1))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/frame.py", line 10381, in apply
+    return op.apply().__finalize__(self, method="apply")
+           ^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 916, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 1063, in apply_standard
+    results, res_index = self.apply_series_generator()
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/apply.py", line 1081, in apply_series_generator
+    results[i] = self.func(v, *self.args, **self.kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 12, in format_entry
+    poem = {"Title": entry["Title"][0], "Poem": entry["Poem"][0], "Poet": entry["Poet"][0], "Tags": entry["Tags"][0]}
+                                                ~~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
