@@ -1,0 +1,214 @@
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:trying PoetryDB
+INFO:poemtools:hello
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_author': 'list' object has no attribute 'join'
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 45, in get_author
+    result = await asyncio.to_thread(requests.get(url+"/author/" + author + "/title"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Response' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 60, in get_author
+    return f.format_list(authors)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 8, in format_list
+    return result.join(", ")
+           ^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'join'
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:trying PoetryDB
+INFO:poemtools:hello
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:trying PoetryDB
+INFO:poemtools:hello
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_author': can only concatenate str (not "list") to str
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 45, in get_author
+    result = await asyncio.to_thread(requests.get(url+"/author/" + author + "/title"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Response' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 57, in get_author
+    return ("There are multiple authors found in the database: " + f.format_list(authors) + ". Which one did you mean?")
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "list") to str
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:trying PoetryDB
+ERROR:poemtools:
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 45, in get_author
+    result = await asyncio.to_thread(requests.get(url+"/author/" + author + "/title"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Response' object is not callable
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:trying PoetryDB
+ERROR:poemtools:
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 45, in get_author
+    result = await asyncio.to_thread(requests.get(url+"/author/" + author + "/title"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Response' object is not callable
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid author name: amy suo
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 19, in become_thesaurus
+    response = await ctx.sample(prompt, system_prompt = sys, temperature = .75)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 19, in become_thesaurus
+    response = await ctx.sample(prompt, system_prompt = sys, temperature = .75)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemprompts:Context()
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 22, in become_thesaurus
+    response = await ctx.sample(prompt, system_prompt = sys, temperature = .75, model_preferences = "xLAM")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemprompts:Context()
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 22, in become_thesaurus
+    logger.info(ctx)
+               ^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest

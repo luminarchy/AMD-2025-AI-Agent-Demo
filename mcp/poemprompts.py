@@ -1,4 +1,6 @@
 from fastmcp import FastMCP, Context
+import logging
+logger = logging.getLogger(__name__)
 
 def register_prompts(mcp):
     @mcp.prompt
@@ -9,30 +11,34 @@ def register_prompts(mcp):
     @mcp.prompt
     def read_db_poem(poem: str, ctx: Context):
         """Generates a user message asking for an audio reading of the poem they have requested."""
-        return f"Can you please do a vocal dramatic reading of this poem: '{poem}'"
+        return f"Can you please do a vocal dramatic reading of this poem: '{poem}' with the context {ctx}"
     
     @mcp.tool
     async def become_thesaurus(word: str, poem: str, ctx: Context):
-        """Generates a user message asking for a synonym of a word to put in their poem."""
+        """Generates a user message asking for a synonym of a word to put in their poem. 
+            word: the word to find a synonym for
+            poem: the poem that the user is working on
+            ctx: the history of the conversation and previous responses. """
+        logger.info(ctx)
         prompt = f"Can you please find a few synonyms for '{word}' that will fit the poem that I am writing: '{poem}' based on previous responses?"
         sys = f"Act like a smart thesaurus and use the conversation to retrieve poems that are similar to the user's poem and search through that information to generate 5-10 synonyms for the user."
-        response = await ctx.sample(prompt, system_prompt = sys, temperature = .75)
-        return response
+        response = await ctx.sample(prompt, system_prompt = sys, temperature = .75, model_preferences = "xLAM")
+        return response.text
     
     @mcp.prompt
     async def become_rhyme(word: str, poem: str, ctx: Context):
         """Generates a user message asking for an audio reading of the poem they have requested."""
-        prompt = f"Can you please find a few rhymes for '{word}' that will fit the poem that I am writing: '{poem}' based on the context of our conversation?"
+        return f"Can you please find a few rhymes for '{word}' that will fit the poem that I am writing: '{poem}' based on the context of our conversation?"
     
     @mcp.tool
-    async def generate_lines(concepts: any, ctx: Context):
+    async def generate_lines(ctx: Context):
         """Response to a user prompt asking to generate a line or lines of poetry for them."""
-        return f"Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any lines of poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any lines of poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
     
     @mcp.tool
-    async def generate_poems(concepts: any, ctx: Context):
+    async def generate_poems(ctx: Context):
         """Response to a user prompt asking to generate a poem or poems for them."""
-        return f"Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poems for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poems for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
     
     
     

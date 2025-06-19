@@ -1,15 +1,17 @@
 from fastmcp import FastMCP
-from poemtools import register_tools
-import format
+from poemtools import initialize_tools
+from poemprompts import register_prompts
+import logging
 
-
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename='myapp.log', level=logging.INFO)
 mcp = FastMCP("poetry server", port = 8002)
-
-register_tools(mcp)
+initialize_tools(mcp)
+register_prompts(mcp)
 
 
 if __name__ == "__main__":
-    print("Starting MCP server on default port...")
+    print("Starting MCP server on port 8002")
     mcp.run()
 
 # command to run: mcpo --port 8002 -- python poem.py
