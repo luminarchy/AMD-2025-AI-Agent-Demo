@@ -4,15 +4,16 @@ description: Funtion Pipe made to use python mcp servers on open-webui.
 author: Haervwe
 author_url: https://github.com/Haervwe/open-webui-tools/
 funding_url: https://github.com/Haervwe/open-webui-tools
-git: https://github.com/Haervwe/open-webui-tools  
+git: https://github.com/Haervwe/open-webui-tools
 version: 0.1.0
-requirements: mcp, mcp-tavily, mcp_server_time
+requirements: mcp, fastmcp, pandas, sqlalchemy, numpy, mcp-tavily, mcp_server_time
 """
+
 import logging
 import json
 import asyncio
 from typing import Optional, Callable, Awaitable, Dict, List, Any
-from dataclasses import dataclass
+import dataclasses
 from pydantic import BaseModel, Field
 from contextlib import AsyncExitStack
 from mcp import ClientSession as Cls
@@ -22,6 +23,7 @@ from mcp.client.stdio import stdio_client
 from open_webui.main import generate_chat_completions
 from open_webui.constants import TASKS
 from open_webui.utils.misc import get_last_user_message
+from open_webui.models.users import Users
 from fastmcp.client.sampling import (
     SamplingMessage,
     SamplingParams,
@@ -64,35 +66,40 @@ def parse_server_args(args: str | List[str]) -> List[str]:
         logger.error(f"Invalid server args format: {type(args)} - {args}")
         return []
 
+
 async def sampling_handler(
-        messages: list[SamplingMessage],
-        params: SamplingParams,
-        context: RequestContext
-    ) -> str:
+    messages: list[SamplingMessage], params: SamplingParams, context: RequestContext
+) -> str:
     mess = [{"role": m.role, "message": m.content.text} for m in messages]
-    url = 'http://localhost:3000/api/chat/completions'
-    headers = {
-        'Authorization': "",
-        'Content-Type': 'application/json'
-    }
+    url = "http://localhost:3000/api/chat/completions"
+    headers = {"Authorization": "", "Content-Type": "application/json"}
     data = {
         "model": "Salesforce/Llama-xLAM-2-70b-fc-r",
         "messages": mess,
         "max_tokens": params.max_tokens,
         "temperature": params.temperature,
         "prompt": params.systemPrompt,
-        "tool_choice": "auto"
-        
+        "tool_choice": "auto",
     }
     response = requests.post(url, headers=headers, json=data)
     return response.json()
 
-@dataclass
+
+@dataclasses.dataclass(init=False)
 class User:
     id: str
     email: str
     name: str
     role: str
+    profile_image_url: str
+    api_key: str
+    info: str
+
+    def __init__(self, **kwargs):
+        names = set([f.name for f in dataclasses.fields(self)])
+        for k, v in kwargs.items():
+            if k in names:
+                setattr(self, k, v)
 
 
 class MCPClient:
@@ -134,7 +141,7 @@ class MCPClient:
                     stdio, write = stdio_transport
 
                     session = await self.exit_stack.enter_async_context(
-                        Cls(stdio, write, sampling_callback = sampling_handler)
+                        Cls(stdio, write, sampling_callback=sampling_handler)
                     )
                     await session.initialize()
 
@@ -307,7 +314,6 @@ class MCPClient:
         """Make a chat completion request to OpenAI API"""
         async with aiohttp.ClientSession(
             headers={
-                "Authorization": f"Bearer {self.pipe.valves.OPENAI_API_KEY}",
                 "Content-Type": "application/json",
             }
         ) as session:
@@ -439,7 +445,7 @@ class MCPClient:
                     await session.close()
                 except Exception as e:
                     logger.exception(f"Error during {server_name} cleanup: {str(e)}")
-            await self.exit_stack.close()
+            await self.exit_stack.aclose()
             self.sessions.clear()
             logger.info("All MCP sessions cleaned up successfully")
         except Exception as e:
@@ -466,9 +472,9 @@ When a user asks a question:
 Do not fabricate tool names or parameters. Only use the exact tools and parameters listed above.""",
             description="MCP client system prompt",
         )
-        OPENAI_API_KEY: str = Field(default="1111", description="OpenAI API key")
+        OPENAI_API_KEY: str = Field(default=None, description="OpenAI API key")
         OPENAI_API_BASE: str = Field(
-            default="http://host.docker.internal:11434/v1",
+            default="http://host.docker.internal:8001/v1",
             description="OpenAI API base URL",
         )
         TEMPERATURE: float = Field(default=0.5, description="Model temperature")
@@ -524,7 +530,11 @@ Do not fabricate tool names or parameters. Only use the exact tools and paramete
         for tool in tools:
             server = tool["server"]
             if server not in server_capabilities:
-                server_capabilities[server] = {"tools": [], "prompts": [], "sampling": []}
+                server_capabilities[server] = {
+                    "tools": [],
+                    "prompts": [],
+                    "sampling": [],
+                }
             tool_desc = f"- {tool['id']}: {tool['description']}\n  Parameters: {json.dumps(tool['input_schema'], indent=2)}"
             server_capabilities[server]["tools"].append(tool_desc)
 

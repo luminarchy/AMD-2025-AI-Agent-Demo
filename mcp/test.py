@@ -11,6 +11,11 @@ pf.to_sql(name='poemsf', con=engine)
 
 print(pf.shape)
 print(pf.columns.values)
+authors = ["W.B.Yeats"]
+sql = ("SELECT * FROM poemsf WHERE ")
+auth = sql + "(Poet LIKE \"%"
+auth += "%\" OR Poet LIKE \"%".join(authors)
+auth += "%\") "
 
     
 

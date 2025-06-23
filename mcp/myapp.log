@@ -505,3 +505,181 @@ INFO:poemtools:setup started
 INFO:poemtools:setup ended
 INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid author name: W.B. Yeats
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemprompts:Context()
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 25, in become_thesaurus
+    response = await ctx.sample(prompt, system_prompt = sys, temperature = .75, model_preferences = "xLAM")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemprompts:Context()
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_thesaurus': Sampling not supported
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 25, in become_thesaurus
+    response = await ctx.sample(prompt, system_prompt = sys, temperature = .75, model_preferences = "xLAM")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/server/context.py", line 232, in sample
+    result: CreateMessageResult = await self.request_context.session.create_message(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/server/session.py", line 240, in create_message
+    return await self.send_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/mcp/shared/session.py", line 297, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_reference': 0
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 413, in get_loc
+    return self._range.index(new_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 0 is not in range
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 168, in get_reference
+    result += f.format_entries(poe)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 25, in format_entries
+    return format_entry(entries)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 12, in format_entry
+    poem = {"Title": entry["Title"][0], "Poem": entry["Poem"][0], "Poet": entry["Poet"][0], "Tags": entry["Tags"][0]}
+                     ~~~~~~~~~~~~~~^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 1130, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 1246, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 415, in get_loc
+    raise KeyError(key) from err
+KeyError: 0
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_reference': 0
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 413, in get_loc
+    return self._range.index(new_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 0 is not in range
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 168, in get_reference
+    result += f.format_entries(poe)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 25, in format_entries
+    return format_entry(entries)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 12, in format_entry
+    poem = {"Title": entry["Title"][0], "Poem": entry["Poem"][0], "Poet": entry["Poet"][0], "Tags": entry["Tags"][0]}
+                     ~~~~~~~~~~~~~~^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 1130, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/series.py", line 1246, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/pandas/core/indexes/range.py", line 415, in get_loc
+    raise KeyError(key) from err
+KeyError: 0
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Tower
+NoneType: None
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Tower
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Tower
+NoneType: None
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Tower
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest

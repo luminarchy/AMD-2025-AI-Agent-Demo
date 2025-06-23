@@ -25,7 +25,7 @@ def initialize_tools(mcp: FastMCP):
 def register_authors(mcp, url, engine):
     @mcp.tool()
     async def get_all_authors(): 
-        """Gets a list of all poets in the database."""
+        """Gets a list of all poets in the database. """
         try: 
             result = await asyncio.to_thread(lambda:requests.get(url+"/author").json())
             return result
@@ -36,7 +36,7 @@ def register_authors(mcp, url, engine):
 
     @mcp.tool()
     async def get_author(author: str): 
-        """Gets a list of the titles of all poems written by a specific author."""
+        """Gets a list of the titles of all poems written by a specific author. Input should be formatted using [Last name] or [First name Last name], no initials. """
         with engine.connect() as conn, conn.begin():
             authors = pd.read_sql_query("SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%" + author + "%\"", conn)
             if authors.shape[0] == 0:
@@ -51,8 +51,11 @@ def register_authors(mcp, url, engine):
 
 def register_poems(mcp, engine):
     @mcp.tool()
-    async def get_poem_title(poem: str, author: str = ""): 
-        """gets a poem by the title."""
+    async def get_poem_title(poem: str, ctx: Context, author: str = ""): 
+        """gets a poem by the title. Optionally can filter by author. 
+            authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
+        
+            """
         
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Title LIKE \"%" + poem + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
@@ -67,7 +70,9 @@ def register_poems(mcp, engine):
 
     @mcp.tool()
     async def get_poems_keyword_titles(keyword: str, ctx: Context, author: str = "", tag = ""): 
-        """searches for the titles of poems that contain specific keyword. Optionally can filter by author and/or tag and can use ctx (conversation history) to fill in these parameters"""
+        """searches for the titles of poems that contain specific keyword. Optionally can filter by author and/or tag 
+         authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
+         tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
     
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tags LIKE \"%" + tag + "%\"", conn)
@@ -79,8 +84,10 @@ def register_poems(mcp, engine):
  
 
     @mcp.tool()
-    async def get_poems_keyword(keyword: str, author: str = "", tag = ""): 
-        """searches for poems that contain specific keyword. Optionally can filter by author and/or tag and can use ctx (conversation history) to fill in these parameters"""
+    async def get_poems_keyword(keyword: str, ctx: Context, author: str = "", tag = ""): 
+        """searches for poems that contain specific keyword. Optionally can filter by author and/or tag
+         authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
+         tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tags LIKE \"%" + tag + "%\"", conn)
             if poe.shape[0] == 0:
@@ -91,8 +98,9 @@ def register_poems(mcp, engine):
     
 def register_lines(mcp, url, engine):
     @mcp.tool()
-    async def get_poems_line(line: str, author: str = ""): 
-        """searches for poems with a specific line. Optionally can filter by author and can use ctx (conversation history) to fill in these parameters"""
+    async def get_poems_line(line: str, ctx: Context, author: str = ""): 
+        """searches for poems with a specific line. Optionally can filter by author
+         authors: Poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. """
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
             if poe.shape[0] == 0:
@@ -103,8 +111,9 @@ def register_lines(mcp, url, engine):
 
 
     @mcp.tool()
-    async def get_line_title(line: str, author: str = ""): 
-        """searches for title of poems with a specific line. Optionally can filter by author and can use ctx (conversation history) to fill in these parameters"""
+    async def get_line_title(line: str, ctx: Context,  author: str = ""): 
+        """searches for title of poems with a specific line. Optionally can filter by author
+         authors: Poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials."""
         
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
@@ -116,7 +125,7 @@ def register_lines(mcp, url, engine):
         return result 
     
     @mcp.tool()
-    async def get_poems_line_output(line: str, args: list[str]): 
+    async def get_poems_line_output(line: str, ctx: Context, args: list[str]): 
         """given a specific line and output format, searches for poems with a specific line and returns the specific parameters of the data"""
         try: 
             output_field = ""
@@ -131,7 +140,7 @@ def register_lines(mcp, url, engine):
 
     @mcp.tool()
     async def get_linecount(count: str): 
-        """given a specific linecount and output format, searches for poems and returns the specific parameters of the data."""
+        """given a specific linecount and output format, searches for poems and returns the specific parameters of the data. """
         try: 
             output_field = ""
             result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + count).json())
@@ -141,8 +150,9 @@ def register_lines(mcp, url, engine):
     
 def register_tags(mcp, url, engine):
     @mcp.tool()
-    def get_tag(tag: str, author: str = "", keyword: str = ""):
-        """searches for poems that have a specific tag (theme, images, categories, etc.).Optionally can filter by author and can use ctx (conversation history) to fill in these parameters. """
+    def get_tag(tag: str, ctx: Context, author: str = "", keyword: str = ""):
+        """searches for poems that have a specific tag (theme, images, categories, etc.).Optionally can filter by author and can use ctx (conversation history) to fill in these parameters. 
+         authors: Optionally filter by author. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. """
         with engine.connect() as conn, conn.begin():
             poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + tag + "%\" AND Poet LIKE \"%" + author + "%\" AND Poem LIKE \"%" + keyword + "%\"", conn)
             if poe.shape[0] == 0:
@@ -154,8 +164,10 @@ def register_tags(mcp, url, engine):
     @mcp.tool()
     async def get_reference(authors: list[str], tags: list[str], ctx: Context):
         """searches for poems to refer to the user as inspiration or reccommended reading, based on context 
-        and any authors, tags or keywords they are looking for or have a preference for"""
-        sql = ("SELECT poemsf.* FROM poemsf WHERE ")
+        and any authors, tags or keywords they are looking for or have a preference for. 
+        authors: list of poets that the user has preference for. Can be auto-generated using ctx as conversation history.Input should be formatted using [Last name] or [First name Last name], no initials. .
+        tags: list of tags that the user has preference for. Can be auto-generated using ctx as conversation history. """
+        sql = ("SELECT * FROM poemsf WHERE ")
         result = []
         with engine.connect() as conn, conn.begin():
             if authors: 
