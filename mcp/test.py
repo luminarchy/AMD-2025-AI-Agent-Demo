@@ -20,7 +20,12 @@ auth += "%\") "
     
 
 with engine.connect() as conn, conn.begin():
-    x = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + "family" + "%\" AND Poet LIKE \"%%\"", conn)
-lis = ["hello"]
-print("wads".join(lis))
+    x = pd.read_sql_query("SELECT * FROM poemsf WHERE Title LIKE \"%" + "The Lake Isle of Innisfree" + "%\" AND Poet LIKE \"%" + "Yeats" + "%\" AND Poet LIKE \"%" + "" + "%\"", conn)
+print(x.shape)
 
+title = "The Lake Isle of Innisfree"
+author_last = "Yeats"
+author_first = ""
+with engine.connect() as conn, conn.begin():
+    x = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Title LIKE \"%{title} %\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
+print(x)

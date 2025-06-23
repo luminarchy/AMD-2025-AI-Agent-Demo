@@ -753,3 +753,177 @@ INFO:poemtools:setup started
 INFO:poemtools:setup ended
 INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poem_title': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 71, in get_poem_title
+    return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poem_title': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 71, in get_poem_title
+    return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_author': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 54, in get_author
+    return f.format_list(authors["Title"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_author': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 57, in get_author
+    return f.format_list(authors["Title"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Sorrow of Love
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Second Coming
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: To a Friend Whose Work Has Come to Nothing
+NoneType: None
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Lake Isle of Innisfree
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Second Coming
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: Sailing to Byzantium
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: Easter, 1916
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Tower
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: Byzantium
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: Under Ben Bulben
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Circus Animals' Desertion
+NoneType: None
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Second Coming
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: The Second Coming
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
