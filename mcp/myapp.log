@@ -683,3 +683,73 @@ INFO:poemtools:setup started
 INFO:poemtools:setup ended
 INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'streamable-http' on http://127.0.0.1:8004/mcp
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager started
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: 2cebddf9f83b4555958778b396dc47ca
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: 4cc19a832eee449bb12d54924eadb691
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: a191f34daef242ae94c8e7d72497df65
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: fbbce178dda14f79ab5ba6eecd03fcff
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: a7745e6a59d846e484441a0af041a60b
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager shutting down
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'streamable-http' on http://127.0.0.1:8004/mcp
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager started
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: 35fe6cf9b75e40908cbdfa5e835674c6
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager shutting down
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'streamable-http' on http://127.0.0.1:8004/mcp
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager started
+INFO:mcp.server.streamable_http_manager:Created new transport with session ID: 355b4a8c43944d81bb0fc03f01d27b99
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_author': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 53, in get_author
+    ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
+                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Warning: RuntimeWarning: coroutine 'Context.info' was never awaited
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager shutting down
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'streamable-http' on http://127.0.0.1:8004/mcp
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager started
+INFO:mcp.server.streamable_http_manager:StreamableHTTP session manager shutting down
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest

@@ -38,3 +38,9 @@ def format_sqltags(tags: list[str]):
     tag += "(Tags LIKE \"%"
     tag += "%\" OR Tags LIKE \"%".join(tags)
     tag += "\"%) "
+
+def format_tags(tags: list[str]):
+    tags = []
+    for tag in tags:
+        tags += tag.split(",")
+    return set(tags)

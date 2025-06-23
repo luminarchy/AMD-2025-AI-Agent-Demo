@@ -18,6 +18,6 @@ def add(a: int, b: int):
 
 if __name__ == "__main__":
     print("Starting MCP server on default port...")
-    mcp.run()
+    mcp.run(transport="http")
 
 # command to run: mcpo --port 8002 -- python server.py

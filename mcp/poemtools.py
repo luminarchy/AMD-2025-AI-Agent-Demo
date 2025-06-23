@@ -35,47 +35,55 @@ def register_authors(mcp, url, engine):
 
 
     @mcp.tool()
-    async def get_author(author: str): 
-        """Gets a list of the titles of all poems written by a specific author. Input should be formatted using [Last name] or [First name Last name], no initials. """
+    async def get_author(author_last: str, ctx: Context, author_first: str = ""): 
+        """Gets a list of the titles of all poems written by a specific author. 
+        author_last: the last name of the author to search by. 
+        author_first: Optional, the first name of the author to search by if specified."""
         with engine.connect() as conn, conn.begin():
-            authors = pd.read_sql_query("SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%" + author + "%\"", conn)
+            authors = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             if authors.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid author name: {author}")
+                logger.exception(f"poetry foundation invalid author name: {author_first} {author_last}")
                 return "Not Found"
             elif authors.shape[0] != 1:
                 return ("There are multiple authors found in the database: " + f.format_list(authors) + ". Which one did you mean?")
             else: 
-                authors = pd.read_sql_query("SELECT title FROM poemsf WHERE Poet LIKE \"%" + author + "%\"", conn)
-                return f.format_list(authors)
+                
+                authors = pd.read_sql_query(f"SELECT Title, Poet, Tags FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
+                # ctx.info(f"User requested author {authors["Poet"][0]} under input: {author_first} {author_last}")
+                # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
+                return f.format_list(authors["Title"])
             
 
 def register_poems(mcp, engine):
     @mcp.tool()
-    async def get_poem_title(poem: str, ctx: Context, author: str = ""): 
+    async def get_poem_title(poem: str, ctx: Context, author_last: str = "", author_first: str = ""): 
         """gets a poem by the title. Optionally can filter by author. 
-            authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
-        
+            author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+            author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
             """
         
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Title LIKE \"%" + poem + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{poem} %\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation invalid poem name: {poem}")
                 return "Not Found"
             elif poe.shape[0] != 1:
                 return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
             else:
+                # ctx.info(f"User requested poem, {poe["Title"][0]}, by poet, {poe["Poet"][0]}. Related tags are {f.format_tags([poe["Tags"][0]])}. Poem: {poe["Poem"][0]}")
+
                 return f.format_entry(poe)
 
 
     @mcp.tool()
-    async def get_poems_keyword_titles(keyword: str, ctx: Context, author: str = "", tag = ""): 
+    async def get_poems_keyword_titles(keyword: str, ctx: Context, author_last: str = "", author_first: str = "", tag = ""): 
         """searches for the titles of poems that contain specific keyword. Optionally can filter by author and/or tag 
-         authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
+        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
          tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
     
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tags LIKE \"%" + tag + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation invalid keyword: {keyword}")
                 return "Not Found"
@@ -84,25 +92,28 @@ def register_poems(mcp, engine):
  
 
     @mcp.tool()
-    async def get_poems_keyword(keyword: str, ctx: Context, author: str = "", tag = ""): 
+    async def get_poems_keyword(keyword: str, ctx: Context, author_last: str = "", author_first: str = "", tag = ""): 
         """searches for poems that contain specific keyword. Optionally can filter by author and/or tag
-         authors: poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. 
+         author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
          tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + keyword + "%\" AND Poet LIKE \"%" + author + "%\" AND Tags LIKE \"%" + tag + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation invalid keyword: {keyword}")
                 return "Not Found"
             else:
+                # ctx.info(f"User requested poems, {f.format_list(poe["Title"])}. Related tags are {f.format_tags(f.format_list(poe["Tags"]))}.")
                 return f.format_entries(poe)
     
 def register_lines(mcp, url, engine):
     @mcp.tool()
-    async def get_poems_line(line: str, ctx: Context, author: str = ""): 
+    async def get_poems_line(line: str, ctx: Context, author_last: str = "", author_first: str = ""): 
         """searches for poems with a specific line. Optionally can filter by author
-         authors: Poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. """
+        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history.  """
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation invalid poem name: {line}")
                 return "Not Found"
@@ -111,12 +122,13 @@ def register_lines(mcp, url, engine):
 
 
     @mcp.tool()
-    async def get_line_title(line: str, ctx: Context,  author: str = ""): 
+    async def get_line_title(line: str, ctx: Context,  author_last: str = "", author_first: str = ""): 
         """searches for title of poems with a specific line. Optionally can filter by author
-         authors: Poet name. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials."""
+        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. """
         
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT Title FROM poemsf WHERE Poem LIKE \"%" + line + "%\" AND Poet LIKE \"%" + author + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{line} %\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation invalid poem name: {line}")
                 return "Not Found"
@@ -150,15 +162,18 @@ def register_lines(mcp, url, engine):
     
 def register_tags(mcp, url, engine):
     @mcp.tool()
-    def get_tag(tag: str, ctx: Context, author: str = "", keyword: str = ""):
+    def get_tag(tag: str, ctx: Context, author_last: str = "", author_first: str = "", keyword: str = ""):
         """searches for poems that have a specific tag (theme, images, categories, etc.).Optionally can filter by author and can use ctx (conversation history) to fill in these parameters. 
-         authors: Optionally filter by author. Can be auto-generated using ctx as conversation history. Input should be formatted using [Last name] or [First name Last name], no initials. """
+        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. """
         with engine.connect() as conn, conn.begin():
-            poe = pd.read_sql_query("SELECT * FROM poemsf WHERE Tags LIKE \"%" + tag + "%\" AND Poet LIKE \"%" + author + "%\" AND Poem LIKE \"%" + keyword + "%\"", conn)
+            poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Tags LIKE \"%{tag}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Poem LIKE \"%{keyword}%\"", conn)
             if poe.shape[0] == 0:
                 logger.exception(f"poetry foundation cannot find any poems under tag '{tag}'")
                 raise Exception
             else: 
+                all = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Tags LIKE \"%{tag}%\"")
+                # ctx.info(f"User requested tag, {tag}, and received poems, {f.format_list(poe["Title"])}. Related authors are {f.format_list(all)}.")
                 return f.format_entries(poe)
 
     @mcp.tool()
@@ -189,7 +204,17 @@ def register_tags(mcp, url, engine):
                 logger.exception(f"poetryDB error: {e}")
         return result
 
-
+    # def register_preference_logging(mcp, url, engine):
+    # @mcp.tool()
+    # async def log_preference_from_chat(ctx: Context, preference_type: str, author: str = "", poem: str = "", tags: list[str] = ""):
+    #     """ Logs a poem, author, or tags from chat history whenever user states a specific preference.
+    #         ctx: context of the recent conversation history. 
+    #         preference_type: the user preference to be logged (accepted values: ["like", "dislike", "neutral"]:
+    #             - "like": the user explicitly expressed positive feelings. 
+    #             - "dislike": the user explicitly expressed negative feelings. 
+    #             - "neutral": the user explicitly expressed neutral feelings. 
+    #         author: (Optional). The author that the user expresses 
+    #     """
 
 
 
