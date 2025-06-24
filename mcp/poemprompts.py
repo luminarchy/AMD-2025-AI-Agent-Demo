@@ -1,8 +1,17 @@
 from fastmcp import FastMCP, Context
 import logging
+from openai import OpenAI
 logger = logging.getLogger(__name__)
 
+openai_api_base = "http://vllm:8001/v1"
 def register_prompts(mcp):
+    client = OpenAI(
+    # defaults to os.environ.get("OPENAI_API_KEY")
+        api_key=None,
+        base_url=openai_api_base,
+    )
+    models = client.models.list()
+    model = models.data[0].id
     @mcp.prompt
     def read_user_poem(poem: str):
         """Generates a user message asking for an audio reading of their poem and constructive feedback."""

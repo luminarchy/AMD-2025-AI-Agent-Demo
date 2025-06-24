@@ -632,7 +632,7 @@ Do not fabricate tool names or parameters. Only use the exact tools and paramete
             # Initialize MCPClient here
             if self.mcp_client is None:
                 config_path = os.path.join(
-                    os.getenv("APP_DIR", "."), "data/mcp_config.json"
+                    os.getenv("APP_DIR", "."), "data/config.json"
                 )
                 logger.info(f"Initializing MCP client with config from: {config_path}")
                 self.mcp_client = MCPClient(mcp_config_path=config_path, pipe=self)
