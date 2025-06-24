@@ -3,24 +3,52 @@ import logging
 from openai import OpenAI
 logger = logging.getLogger(__name__)
 
-openai_api_base = "http://vllm:8001/v1"
+openai_api_base = "http://127.0.0.1:8001/v1"
 def register_prompts(mcp):
     client = OpenAI(
     # defaults to os.environ.get("OPENAI_API_KEY")
-        api_key=None,
+        api_key="EMPTY",
         base_url=openai_api_base,
     )
     models = client.models.list()
     model = models.data[0].id
     @mcp.prompt
-    def read_user_poem(poem: str):
-        """Generates a user message asking for an audio reading of their poem and constructive feedback."""
-        return f"Can you please do a vocal dramatic reading of the poem I've written: '{poem}' so that I can hear what it sounds like, and then give me constructive feedback as if this were the first time you were encountering me, my poem, and my writing. Please give me creative, but accurate and correct commentary on the themes, metaphors, imagery, emotions, and language used in the poem. If present, you should additionally tell me on how the rhyme, meter, and rhythm interact with the flow and feel of the writing. In order to be as accurate as possible, you should use any tools available to you to reference existing poetry as a guide for your commentary. If the poem has no title, you should also help me generate a title for the poem, and you should ask me if I want to see some similar poems as inspiration. " 
+    def read_poem(poem: str, ctx: Context, themes: str = ""):
+        """Generates a user message asking for an audio reading of a specified poem
+            poem: the poem that the user is asking to be read to them. Can be retrieved using context. 
+            ctx: the context of the conversation history
+            themes: (Optional) any themes mentioned in the conversation context relating to the poem or author. """
+        completion = client.chat.completions.create(
+            messages=[{
+                "role": "system",
+                "content": "You are a dramatic performer of poetry, able to read poems with great emotional intensity and theatric flair."
+            }, {
+                "role": "user",
+                "content": f"Can you please do a vocal dramatic reading of this poem '{poem}' keeping in mind the themes we have discussed ({themes}) so that I can hear what it sounds like?" 
+            }],
+            model=model, #figure a way to make this a TTS model
+        )
+        return completion.choices[0].message.content
     
     @mcp.prompt
-    def read_db_poem(poem: str, ctx: Context):
-        """Generates a user message asking for an audio reading of the poem they have requested."""
-        return f"Can you please do a vocal dramatic reading of this poem: '{poem}' with the context {ctx}"
+    def feedback(poem: str, ctx: Context):
+        """Generates a user message asking for constructive feedback on the poem that they have written.
+            poem: the user-written poem that the user is asking for feedback for. Can be retrieved using context. 
+            ctx: the context of the conversation history"""
+        completion = client.chat.completions.create(
+            messages=[{
+                "role": "system",
+                "content": "You are a detail-oriented poetry critic with a wide-bredth of knowledge on poetry. Whenever you read a poem, you always reference the tools available to you to cross-compare styles, writing, themes, and imagery with those of famous authors."
+            }, {
+                "role": "developer",
+                "content": "When given a poem to read, you must provide 2-3 paragraphs of constructive criticism. You must first identify several themes or motifs in the poem that you are reading and use those to fetch at least 1-2 similar poems with the tools and functions available to you (if you cannot find results, try rewording the inputs to the tools) for reference. Then you must generate 1-3 sentences that cross-compare the writing style, flow, and imagery of the reference poems and the one that you are reading. You may output these reference poems as recommendations to the writer. Then, you must identify any and all literary devices that are used in the poem that you are reading, making sure your knowledge is accurate by citing the tools available to you. For each literary device that you recognize, you must generate 1-2 sentences on their usage in the poem and the specific way that they interact with the overall theme and imagery. Then you must identify any rhymes or rhyme schemes that the poem has, making sure that your knowledge is accurate by citing the tools available to you. You must generate 1-2 sentences on how rhyme appears in the poem and what role it plays in the reading. If the poem has no rhyme, then you must comment on how the lack of rhyme interacts with the poem. Then you must identify on the rhythm/meter of the poem, making sure that your knowledge is accurate by using the tools available to you. You must generate 1-2 sentences on how the rhythm/meter or lack of rhyme/meter (if there is none) of the poem interacts with the musicality of the reading and how that affects the themes being discussed. Finally you must generate 3-5 sentences on the writing style, the flow of the poem, and the emotions that the writing invokes. Find 2-3 specific lines or phrases that you like and generate a sentence for each on why you liked them. Find 1-2 specific lines or phrases that you think could use a little work and offer suggestions on how they can be fixed. Summarize your criticism by generating 2-3 sentences on what you liked in the overall poem and 1-2 sentences on what you disliked in the overall poem. Finally conclude your commentary with any lingering thoughts that you have on the poem, making sure to bring up your thoughts on the poem's writing, structure, themes, and devices. Generate at least 1-2 questions on the poem to finish."
+            },{
+                "role": "user",
+                "content": f"Can you give me feedback on my poem: {poem}?"
+            }],
+            model=model, #figure a way to make this a TTS model
+        )
+        return completion.choices[0].message.content
     
     @mcp.tool
     async def become_thesaurus(word: str, poem: str, ctx: Context):
