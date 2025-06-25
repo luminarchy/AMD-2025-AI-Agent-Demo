@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(filename='myapp.log', level=logging.INFO)
 mcp = FastMCP("poetry server", port = "9002")
 initialize_tools(mcp)
-register_prompts(mcp)
+
 
 
 if __name__ == "__main__":

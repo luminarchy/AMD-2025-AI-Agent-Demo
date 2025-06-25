@@ -12,7 +12,7 @@ def register_prompts(mcp):
     )
     models = client.models.list()
     model = models.data[0].id
-    @mcp.prompt
+    @mcp.tool
     def read_poem(poem: str, ctx: Context, themes: str = ""):
         """Generates a user message asking for an audio reading of a specified poem
             poem: the poem that the user is asking to be read to them. Can be retrieved using context. 
@@ -30,7 +30,7 @@ def register_prompts(mcp):
         )
         return completion.choices[0].message.content
     
-    @mcp.prompt
+    @mcp.tool
     def feedback(poem: str, ctx: Context):
         """Generates a user message asking for constructive feedback on the poem that they have written.
             poem: the user-written poem that the user is asking for feedback for. Can be retrieved using context. 
@@ -51,30 +51,72 @@ def register_prompts(mcp):
         return completion.choices[0].message.content
     
     @mcp.tool
-    async def become_thesaurus(word: str, poem: str, ctx: Context):
+    async def become_thesaurus(word: str, ctx: Context, poem: str = ""):
         """Generates a user message asking for a synonym of a word to put in their poem. 
-            word: the word to find a synonym for
-            poem: the poem that the user is working on
-            ctx: the history of the conversation and previous responses. """
-        logger.info(ctx)
-        prompt = f"Can you please find a few synonyms for '{word}' that will fit the poem that I am writing: '{poem}' based on previous responses?"
-        sys = f"Act like a smart thesaurus and use the conversation to retrieve poems that are similar to the user's poem and search through that information to generate 5-10 synonyms for the user."
-        response = await ctx.sample(prompt, system_prompt = sys, temperature = .75, model_preferences = "xLAM")
-        return response.text
-    
-    @mcp.prompt
-    async def become_rhyme(word: str, poem: str, ctx: Context):
-        """Generates a user message asking for an audio reading of the poem they have requested."""
-        return f"Can you please find a few rhymes for '{word}' that will fit the poem that I am writing: '{poem}' based on the context of our conversation?"
+            word: the word to find a synonym for, can be auto-generated using conversation history
+            ctx: context or the history of the conversation and previous responses.
+            poem: (Optional) the poem that the user is working on, can be filled in with conversation history. """
+        completion = client.chat.completions.create(
+            messages=[{
+                "role": "system",
+                "content": "You are a thesaurus."
+            }, {
+                "role": "developer",
+                "content": f"Act like a smart thesaurus and use the conversation and the tools available to you to retrieve poems that are similar to the user's poem or have the same theme as the user's poem. Search through that data to find or generate 5-10 words that are synonyms for {word} and output those words and their definitions to the user. If the user is not writing a poem or if you cannot find a poem they're working on in the context, then simply generate synonyms based off of any themes mentioned in the conversation."
+            },{
+                "role": "user",
+                "content": f"Can you please find a few synonyms for '{word}' that will fit the poem that I am writing: '{poem}' based on previous responses?"
+            }],
+            model=model, #figure a way to make this a TTS model
+        )
+        return completion.choices[0].message.content
     
     @mcp.tool
-    async def generate_lines(ctx: Context, poem: str = ""):
-        """Generate a line of poetry for the user."""
+    async def become_rhyme(word: str, ctx: Context, poem: str = ""):
+        """Generates a user message asking for an audio reading of the poem they have requested.
+            word: the word to find a rhyme for, can be auto-generated using conversation history
+            ctx: context or the history of the conversation and previous responses.
+            poem: (Optional) the poem that the user is working on, can be filled in with conversation history."""
+        completion = client.chat.completions.create(
+            messages=[{
+                "role": "developer",
+                "content": f"When you are asked for a rhyme, you will first identify any types of rhyme scheme within the poem you are reading, ensuring that your knowledge is accurate by citing the tools available to you. Then, using the context of the conversation history you will identify the types of rhyme that the user is asking for (if not explicitly stated, assume that they want both a perfect and imperfect rhyme). Analyze the poem for themes and motifs, and then for each type of rhyme requested, try to generate 3-4 rhymes that will fit in the poem. If the user is not writing a poem or you cannot find their poem in the context, then search for any themes or motifs mentioned in the conversation, and generate rhymes based on that."
+            },{
+                "role": "user",
+                "content": f"Can you please generate some rhymes for '{word}' that will fit the poem that I am writing: '{poem}' based on previous responses?"
+            }],
+            model=model, #figure a way to make this a TTS model
+        )
+        return completion.choices[0].message.content
+
+    @mcp.tool
+    async def become_word(ctx: Context, poem: str = ""):
+        """Generates a user message asking to generate a word to fill in the blank or to predict the next word."""
+        completion = client.chat.completions.create(
+            messages=[{
+                "role": "developer",
+                "content": f"You are given either given a fill-in-the-blank task or asked to generate the next word in a given user-written poem. You will first analyze the poem and the conversation history to find themes, motifs, and images. Make sure to analyze the context and flow of the inputted poem thoroughly. You must generate 5-10 words that will fit in the poem, and output them to the user."
+            },{
+                "role": "user",
+                "content": f"Can you help me fill in the blank or generate the next word for my poem: '{poem}'?"
+            }],
+            model=model, #figure a way to make this a TTS model
+        )
+        return completion.choices[0].message.content
+    
+    @mcp.tool
+    async def generate_phrase(ctx: Context, poem: str = ""):
+        """Generate a phrase of poetry for the user. Return output exactly as written."""
+        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any phrases of poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+
+    @mcp.tool
+    async def generate_line(ctx: Context, poem: str = ""):
+        """Generate a line or lines of poetry for the user."""
         return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any lines of poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
     
     @mcp.tool
-    async def generate_poems(ctx: Context, input: str = ""):
-        """Generate a poem for the user"""
+    async def generate_poem(ctx: Context, input: str = ""):
+        """Generate a poem or poems for the user"""
         return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poems for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
     
     

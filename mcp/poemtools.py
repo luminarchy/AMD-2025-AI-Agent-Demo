@@ -247,6 +247,17 @@ def register_tags(mcp, url, engine):
             except Exception as e:
                 logger.exception(f"poetryDB error: {e}")
         return result
+    
+    @mcp.tool
+    async def generate_lines(ctx: Context, poem: str = ""):
+        """Generate a line of poetry for the user."""
+        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any lines of poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+    
+    @mcp.tool
+    async def generate_poems(ctx: Context, input: str = ""):
+        """Generate a poem for the user"""
+        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poems for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+    
 
     # def register_preference_logging(mcp, url, engine):
     # @mcp.tool()

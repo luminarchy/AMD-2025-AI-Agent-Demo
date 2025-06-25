@@ -18,13 +18,13 @@ services:
     cap_add:
       - SYS_PTRACE
     environment: 
-      HIP_VISIBLE_DEVICES: 0,1
-      ROCR_VISIBLE_DEVICES: 0,1
+      HIP_VISIBLE_DEVICES: 2,3
+      # ROCR_VISIBLE_DEVICES: 5,6
 
       # one of these makes it work and idk which ones
-      VLLM_SKIP_P2P_CHECK: 1
-      NCCL_CUMEM_ENABLE: 0
-      NCCL_IB_DISABLE: 1
+      # VLLM_SKIP_P2P_CHECK: 1
+      # NCCL_CUMEM_ENABLE: 0
+      # NCCL_IB_DISABLE: 1
       HSA_ENABLE_IPC_MODE_LEGACY: 0
       # why not have all of them 
 
