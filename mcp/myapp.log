@@ -1218,3 +1218,36 @@ INFO:poemtools:setup started
 INFO:poemtools:setup ended
 INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:openai._base_client:Retrying request to /models in 0.456174 seconds
+INFO:openai._base_client:Retrying request to /models in 0.771588 seconds
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poem_title': name 'poem' is not defined
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 97, in get_poem_title
+    logger.exception(f"poetry foundation invalid poem name: {poem}")
+                                                             ^^^^
+NameError: name 'poem' is not defined. Did you mean: 'poe'?
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://10.194.176.195/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest

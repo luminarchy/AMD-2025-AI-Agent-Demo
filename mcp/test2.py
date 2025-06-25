@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-openai_api_base = "http://127.0.0.1:8001/v1"
+openai_api_base = "http://10.194.176.195/v1"
 
 
 client = OpenAI(
@@ -30,4 +30,4 @@ chat_completion = client.chat.completions.create(
 )
 
 print("Chat completion results:")
-print(chat_completion)
+print(chat_completion.choices[0].message.content)
