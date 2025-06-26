@@ -43,7 +43,7 @@ def register_knowledge(mcp):
 
     @mcp.tool
     def get_rhyme():
-        """Returns basic informaton about rhyme in poetry for reference. Can be used in conjunction with other functions to analyze meter in retrieved or inputted poems. 
+        """Returns basic informaton about types of rhyme in poetry for reference. Can be used in conjunction with other functions to analyze meter in retrieved or inputted poems. 
         If content of the return value is to be outputted to the user, format the output in a list of the names of rhyme [perfect. eye, etc.] in order to shorten the output length and ask the user if they have a specific rhyme they wish to know about."""
         rhyme = ("The word rhyme can be used in a specific and a general sense. In the specific sense, two words rhyme if their final stressed vowel and all following sounds are identical; two lines of poetry rhyme if their final strong positions are filled with rhyming words. \n"
                 + "Perfect rhymes:  a form of rhyme between two words or phrases in which The stressed vowel sound in both words must be identical, as well as any subsequent sounds. For example, the words kit and bit form a perfect rhyme, as do spaghetti and already in American accents and the onset of the stressed syllable in the words must differ. For example, pot and hot are a perfect rhyme, while leave and believe are not. Word pairs that satisfy the first condition but not the second (such as the aforementioned leave and believe) are technically identities (also known as identical rhymes or identicals). Homophones, being words of different meaning but identical pronunciation, are an example of identical rhyme. Types of perfect rhyme include: \n"

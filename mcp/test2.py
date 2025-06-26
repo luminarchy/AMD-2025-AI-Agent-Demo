@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-openai_api_base = "http://10.194.176.195/v1"
+openai_api_base = "http://localhost:8001/v1"
 
 
 client = OpenAI(

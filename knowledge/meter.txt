@@ -1,0 +1,30 @@
+Meter is composed of two components: The number of syllables in a line and a pattern of emphasis on those syllables. A line of poetry can be broken into “feet,” which are individual units within a line of poetry. A foot of poetry has a specific number of syllables and a specific pattern of emphasis. 
+In English poetry, the most common types of metrical feet are two syllables and three syllables long. They’re characterized by their particular combination of stressed syllables (DUH or /) and unstressed syllables (duh or u). There also anceps (x) which can be either stressed or unstressed. The common stress patterns of poetic feet include: 
+    Trochee (trochaic): Pronounced DUH-duh (/u), as in 'ladder': LAD-der
+    Iamb (iambic): Pronounced duh-DUH (u/), as in 'indeed': in-DEED
+    Spondee (spondaic). Pronounced DUH-DUH (//), as in 'TV.' 
+    Dactyl (dactylic). Pronounced DUH-duh-duh (/uu), as in 'certainly': CER-tain-ly 
+    Anapest (anapestic). Pronounced duh-duh-DUH (uu/), as in 'what the heck!' (Anapestic poetry typically divides its stressed syllables across multiple words.) 
+ 
+Metrical feet are repeated over the course of a line of poetry to create poetic meter. We describe the length of a poetic meter by using Greek suffixes: 
+    one foot = monometer 
+    two feet = dimeter 
+    three feet = trimeter 
+    four feet = tetrameter 
+    five feet = pentameter 
+    six feet = hexameter 
+    seven feet = heptameter 
+    eight feet = octameter 
+    eight feet = octameter 
+Combining these two components, you get many possibilities of poetic meter. Meter is typically denoted with <stress pattern> <length>, such as 'iambic pentameter' (five iambs per line for a total of 10 syllables) or dactylic hexameter. 
+    Qualitative meter is characterized by stressed syllables coming at regular intervals—such as the consistent flow of five iambs in a line of a Shakespearean sonnet. 
+    Quantitative meter, by contrast, is built on patterns based on syllable weight rather than stress. For instance, in quantitative meter, a line that is technically written in dactylic hexameter could contain not only dactyls (DUH-duh-duh) but also a spondee (DUH-DUH). What matters is not the 'stress' on a syllable but rather the 'length' of a syllable. 
+    Accentual verse has a fixed number of stresses per line regardless of the number of syllables that are present. Accentual verse is particularly common in children's poetry; nursery rhymes and the less well-known skipping-rope rhymes are the most common form of accentual verse in the English Language. The poem, 'Baa Baa Black Sheep' has two stresses in each line but a varying number of unstressed syllables. 
+    Accentual-syllabic verse is an extension of accentual verse which fixes both the number of stresses and syllables within a line or stanza.
+    Syllabic verse is a poetic form having a fixed or constrained number of syllables per line, while stress, quantity, or tone play a distinctly secondary role—or no role at all—in the verse structure. A number of English-language poets in the Modernist tradition experimented with syllabic verse. These include Marianne Moore, Dylan Thomas, Louis Zukofsky, Kenneth Rexroth and Thom Gunn. Some more traditional poets have also used syllabics, including Elizabeth Daryush and Robert Bridges. Bridges's Testament of Beauty is the longest syllabic poem in English 
+    Alliterative verse is a form of verse that uses alliteration as the principal device to indicate the underlying metrical structure, as opposed to other devices such as rhyme. Old English alliterative verse comes in a variety of forms. It includes heroic poetry like Beowulf, The Battle of Brunanburh, or The Battle of Maldon; elegiac or 'wisdom' Poetry like The Ruin or The Wanderer, riddles, translations of classical and Latin poetry, saints' lives, poetic Biblical paraphrases, original Christian poems, charms, mnemonic poems used to memorize information, and the like. he use of alliterative verse continued (or was revived) in Middle English, William Langland's Piers Plowman is another important English alliterative poem. 
+Common meter in poetry: 
+    Unrhymed iambic pentameter is known as blank verse, and is also heavily utilized by Shakespeare—in his dramatic works rather than his poems. John Milton’s Paradise Lost is an epic poem of blank verse and another hallmark of the form. 
+    Iambic trimeter and iambic tetrameter are less common than their five-footed cousin, but they can still be found in poetry. John Keats primarily relies upon iambic tetrameter in 'La Belle Dame sans Merci,' although not every line has four feet. 
+    Dactylic hexameter is sometimes called “the meter of epic” and was popular in the construction of classical Greek and Latin epic poems. Virgil's Aeneid, Ovid's Metamorphoses, and Homer's Iliad and Odyssey are all based upon dactylic hexameter. The nineteenth-century American poet Henry Wadsworth Longfellow also made ample use of dactylic hexameter, such as in his epic poem 'Evangeline.' 
+citation: 'https://www.masterclass.com/articles/poetry-101-what-is-meter-learn-the-difference-between-qualitative-and-quantitative-meter-in-poetry-with-examples',  'https://en.wikipedia.org/wiki/Metre_(poetry)' 

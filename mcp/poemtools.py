@@ -18,7 +18,7 @@ def initialize_tools(mcp: FastMCP):
     pf.to_sql(name='poemsf', con=engine)
     register_authors(mcp, url, engine)
     register_poems(mcp, engine)
-    register_lines(mcp, url, engine)
+    # register_lines(mcp, url, engine)
     register_tags(mcp, url, engine)
     logger.info("setup ended")
 
@@ -105,23 +105,23 @@ def register_poems(mcp, engine):
                 return f.format_entry(poe)
 
 
-    @mcp.tool()
-    async def get_poems_keyword_titles(keyword: str, ctx: Context, author_last: str = "", author_first: str = "", tag = ""): 
-        """searches for the titles of poems that contain specific keyword. Optionally can filter by author and/or tag 
-        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
-         tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
+    # @mcp.tool()
+    # async def get_poems_keyword_titles(keyword: str, ctx: Context, author_last: str = "", author_first: str = "", tag = ""): 
+    #     """searches for the titles of poems that contain specific keyword. Optionally can filter by author and/or tag 
+    #     author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+    #     author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
+    #      tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
     
-        with engine.connect() as conn, conn.begin():
-            if author_first != "":
-                poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
-            else:
-                poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Tags LIKE \"%{tag}%\"", conn)
-            if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid keyword: {keyword}")
-                return "Not Found"
-            else:
-                return f.format_list(poe)
+    #     with engine.connect() as conn, conn.begin():
+    #         if author_first != "":
+    #             poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
+    #         else:
+    #             poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Tags LIKE \"%{tag}%\"", conn)
+    #         if poe.shape[0] == 0:
+    #             logger.exception(f"poetry foundation invalid keyword: {keyword}")
+    #             return "Not Found"
+    #         else:
+    #             return f.format_list(poe)
  
 
     @mcp.tool()
@@ -142,65 +142,65 @@ def register_poems(mcp, engine):
                 # ctx.info(f"User requested poems, {f.format_list(poe["Title"])}. Related tags are {f.format_tags(f.format_list(poe["Tags"]))}.")
                 return f.format_entries(poe)
     
-def register_lines(mcp, url, engine):
-    @mcp.tool()
-    async def get_poems_line(line: str, ctx: Context, author_last: str = "", author_first: str = ""): 
-        """searches for poems with a specific line. Optionally can filter by author
-        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history.  """
-        with engine.connect() as conn, conn.begin():
-            if author_first != "":
-                poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
-            else:
-                poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\"", conn)
-            if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {line}")
-                return "Not Found"
-            else:
-                return f.format_entries(poe)
+# def register_lines(mcp, url, engine):
+#     @mcp.tool()
+#     async def get_poems_line(line: str, ctx: Context, author_last: str = "", author_first: str = ""): 
+#         """searches for poems with a specific line. Optionally can filter by author
+#         author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+#         author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history.  """
+#         with engine.connect() as conn, conn.begin():
+#             if author_first != "":
+#                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
+#             else:
+#                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\"", conn)
+#             if poe.shape[0] == 0:
+#                 logger.exception(f"poetry foundation invalid poem name: {line}")
+#                 return "Not Found"
+#             else:
+#                 return f.format_entries(poe)
 
 
-    @mcp.tool()
-    async def get_line_title(line: str, ctx: Context,  author_last: str = "", author_first: str = ""): 
-        """searches for title of poems with a specific line. Optionally can filter by author
-        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. """
+#     @mcp.tool()
+#     async def get_line_title(line: str, ctx: Context,  author_last: str = "", author_first: str = ""): 
+#         """searches for title of poems with a specific line. Optionally can filter by author
+#         author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
+#         author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. """
         
-        with engine.connect() as conn, conn.begin():
-            if author_first != "":
-                poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
-            else:
-                poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\"", conn)
-            if poe.shape[0] == 0:
-                logger.exception(f"poetry foundation invalid poem name: {line}")
-                return "Not Found"
-            else:
-                return f.format_list(poe)
-        return result 
+#         with engine.connect() as conn, conn.begin():
+#             if author_first != "":
+#                 poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
+#             else:
+#                 poe = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poem LIKE \"%{line}%\" AND Poet LIKE \"%{author_last}%\"", conn)
+#             if poe.shape[0] == 0:
+#                 logger.exception(f"poetry foundation invalid poem name: {line}")
+#                 return "Not Found"
+#             else:
+#                 return f.format_list(poe)
+#         return result 
     
-    @mcp.tool()
-    async def get_poems_line_output(line: str, ctx: Context, args: list[str]): 
-        """given a specific line and output format, searches for poems with a specific line and returns the specific parameters of the data"""
-        try: 
-            output_field = ""
-            if args != []:
-                output_field += "/"
-                output_field += ",".join(args)
-            result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line + output_field).json())
-            return result
-        except Exception as e:
-            logger.exception(f"poetrydb search error: {str(e)}")
+#     @mcp.tool()
+#     async def get_poems_line_output(line: str, ctx: Context, args: list[str]): 
+#         """given a specific line and output format, searches for poems with a specific line and returns the specific parameters of the data"""
+#         try: 
+#             output_field = ""
+#             if args != []:
+#                 output_field += "/"
+#                 output_field += ",".join(args)
+#             result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + line + output_field).json())
+#             return result
+#         except Exception as e:
+#             logger.exception(f"poetrydb search error: {str(e)}")
 
 
-    @mcp.tool()
-    async def get_linecount(count: str): 
-        """given a specific linecount and output format, searches for poems and returns the specific parameters of the data. """
-        try: 
-            output_field = ""
-            result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + count).json())
-            return result
-        except Exception as e:
-            logger.exception(f"poetrydb search error: {str(e)}")
+#     @mcp.tool()
+#     async def get_linecount(count: str): 
+#         """given a specific linecount and output format, searches for poems and returns the specific parameters of the data. """
+#         try: 
+#             output_field = ""
+#             result = await asyncio.to_thread(lambda:requests.get(url+"/title/" + count).json())
+#             return result
+#         except Exception as e:
+#             logger.exception(f"poetrydb search error: {str(e)}")
     
 def register_tags(mcp, url, engine):
     @mcp.tool()
