@@ -81,10 +81,10 @@ def register_prompts(mcp):
         completion = client.chat.completions.create(
             messages=[{
                 "role": "system",
-                "content": "You are a dictionary with full knowledge of every word in the English language."
+                "content": "You are a dictionary with full knowledge of every word in the English language. Your job is to select several rhymes from a long list of rhyming words."
             },{
                 "role": "developer",
-                "content": f"Choose the top 10 words from {results} that match the themes and motifs in the poem: '{poem}'. If there are fewer than 10 words in {results}, simply return all of the words in the list."
+                "content": f"Choose the top 10 rhymes from this list of rhymes {results} that match the themes and motifs in the poem: '{poem}'. If there are fewer than 10 rhymes in {results}, simply return all of the rhymes in the list."
             }],
             model=model, 
             temperature = .2,
