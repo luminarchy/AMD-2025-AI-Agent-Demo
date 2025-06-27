@@ -1344,3 +1344,242 @@ INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with tran
 INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
 INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
 INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poem_title': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 101, in get_poem_title
+    return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'get_poem_title': zero-dimensional arrays cannot be concatenated
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemtools.py", line 101, in get_poem_title
+    return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/format.py", line 7, in format_list
+    result = np.concatenate(list.values).tolist()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: zero-dimensional arrays cannot be concatenated
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_word': name 'knowledge' is not defined
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 104, in become_word
+    "content": f"You are a dictionary with full knowledge of every word in the English language. You also have a wide background knowledge of pre-existing poems: {knowledge}"
+                                                                                                                                                                   ^^^^^^^^^
+NameError: name 'knowledge' is not defined
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:FastMCP.fastmcp.tools.tool_manager:Error calling tool 'become_word': name 'knowledge' is not defined
+Traceback (most recent call last):
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool_manager.py", line 130, in call_tool
+    return await tool.run(arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/.venv/lib/python3.12/site-packages/fastmcp/tools/tool.py", line 220, in run
+    result = await result
+             ^^^^^^^^^^^^
+  File "/home/amysuo12/amd2025test/mcp/poemprompts.py", line 104, in become_word
+    "content": f"You are a dictionary with full knowledge of every word in the English language. You also have a wide background knowledge of pre-existing poems: {knowledge}"
+                                                                                                                                                                   ^^^^^^^^^
+NameError: name 'knowledge' is not defined
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+ERROR:poemtools:poetry foundation invalid poem name: random
+NoneType: None
+INFO:poemtools:returned: Empty DataFrame
+Columns: [index, Title, Poem, Poet, Tags]
+Index: []
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:poemtools:setup started
+INFO:poemtools:setup ended
+INFO:FastMCP.fastmcp.server.server:Starting MCP server 'poetry server' with transport 'stdio'
+INFO:mcp.server.lowlevel.server:Processing request of type ListToolsRequest
+INFO:mcp.server.lowlevel.server:Processing request of type CallToolRequest
+INFO:httpx:HTTP Request: POST http://localhost:8001/v1/chat/completions "HTTP/1.1 200 OK"

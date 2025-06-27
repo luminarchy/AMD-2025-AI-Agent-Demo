@@ -84,8 +84,8 @@ def register_poems(mcp, engine):
     async def get_poem_title(title: str, ctx: Context, author_last: str = "", author_first: str = ""): 
         """gets a poem by the title. Optionally can filter by author. 
             title: title of the poem
-            author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-            author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
+            author_last: Last name of the poet to search by. Can be auto-generated using conversation history.  
+            author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. 
             """
         
         with engine.connect() as conn, conn.begin():
@@ -127,9 +127,9 @@ def register_poems(mcp, engine):
     @mcp.tool()
     async def get_poems_keyword(keyword: str, ctx: Context, author_last: str = "", author_first: str = "", tag = ""): 
         """searches for poems that contain specific keyword. Optionally can filter by author and/or tag
-         author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. 
-         tags: a theme, image, or topic. Can be auto-generated using ctx as conversation history. """
+         author_last: Last name of the poet to search by. Can be auto-generated using conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. 
+         tags: a theme, image, or topic. Can be auto-generated using conversation history. """
         with engine.connect() as conn, conn.begin():
             if author_first != "":
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
@@ -206,9 +206,9 @@ def register_tags(mcp, url, engine):
     @mcp.tool()
     def get_tag(tag: str, ctx: Context, author_last: str = "", author_first: str = ""):
         """searches for poems that have a specific tag (theme, images, categories, etc.). Returns author, poem, and title. Can be used to search for poems/authors with similar themess and imgaery. 
-        Optionally can filter by author and can use ctx (conversation history) to fill in these parameters. 
-        author_last: Last name of the poet to search by. Can be auto-generated using ctx as conversation history.  
-        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using ctx as coversation history. """
+        Optionally can filter by author and can use =conversation histor to fill in these parameters. 
+        author_last: Last name of the poet to search by. Can be auto-generated using conversation history.  
+        author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. """
         with engine.connect() as conn, conn.begin():
             if author_first != "":
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{tag}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
@@ -224,8 +224,8 @@ def register_tags(mcp, url, engine):
     async def get_reference(authors: list[str], tags: list[str], ctx: Context):
         """searches for poems to refer to the user as inspiration or reccommended reading, based on context 
         and any authors, tags or keywords they are looking for or have a preference for. 
-        authors: list of poets that the user has preference for. Can be auto-generated using ctx as conversation history.Input should be formatted using [Last name] or [First name Last name], no initials. .
-        tags: list of tags that the user has preference for. Can be auto-generated using ctx as conversation history. """
+        authors: list of poets that the user has preference for. Can be auto-generated using conversation history.Input should be formatted using [Last name] or [First name Last name], no initials. .
+        tags: list of tags that the user has preference for. Can be auto-generated using  conversation history. """
         sql = ("SELECT * FROM poemsf WHERE ")
         result = []
         with engine.connect() as conn, conn.begin():
