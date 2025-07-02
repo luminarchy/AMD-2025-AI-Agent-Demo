@@ -48,7 +48,7 @@ def register_authors(mcp, url, engine):
                 logger.exception(f"poetry foundation invalid author name: {author_first} {author_last}")
                 return "Not Found"
             elif authors.shape[0] > 1:
-                return ("There are multiple authors found in the database: " + f.format_list(authors) + ". Which one did you mean?")
+                return (f"There are multiple authors found in the database: {f.format_list(authors)}. Which one did you mean?")
             else: 
                 
                 authors = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
@@ -220,33 +220,33 @@ def register_tags(mcp, url, engine):
                 # ctx.info(f"User requested tag, {tag}, and received poems, {f.format_list(poe["Title"])}. Related authors are {f.format_list(all)}.")
                 return f.format_entries(poe)
 
-    @mcp.tool()
-    async def get_reference(authors: list[str], tags: list[str], ctx: Context):
-        """searches for poems to refer to the user as inspiration or reccommended reading, based on context 
-        and any authors, tags or keywords they are looking for or have a preference for. 
-        authors: list of poets that the user has preference for. Can be auto-generated using conversation history.Input should be formatted using [Last name] or [First name Last name], no initials. .
-        tags: list of tags that the user has preference for. Can be auto-generated using  conversation history. """
-        sql = ("SELECT * FROM poemsf WHERE ")
-        result = []
-        with engine.connect() as conn, conn.begin():
-            if authors: 
-                auth = sql + "(Poet LIKE \"%"
-                auth += "%\" OR Poet LIKE \"%".join(authors)
-                auth += "%\") "
-                poe = pd.read_sql_query(auth, conn)
-                result += f.format_entries(poe)
-            if tags:
-                tag = sql + "(Tags LIKE \"%"
-                tag += "%\" OR Tags LIKE \"%".join(tags)
-                tag += "%\") "
-                poe = pd.read_sql_query(tag, conn)
-                result += f.format_entries(poe)
-        if len(result) == 0:
-            try: 
-                result = await asyncio.to_thread(lambda:requests.get(url+"/random").json())
-            except Exception as e:
-                logger.exception(f"poetryDB error: {e}")
-        return result
+    # @mcp.tool()
+    # async def get_reference(authors: list[str], tags: list[str], ctx: Context):
+    #     """searches for poems to refer to the user as inspiration or reccommended reading, based on context 
+    #     and any authors, tags or keywords they are looking for or have a preference for. 
+    #     authors: list of poets that the user has preference for. Can be auto-generated using conversation history.Input should be formatted using [Last name] or [First name Last name], no initials. .
+    #     tags: list of tags that the user has preference for. Can be auto-generated using  conversation history. """
+    #     sql = ("SELECT * FROM poemsf WHERE ")
+    #     result = []
+    #     with engine.connect() as conn, conn.begin():
+    #         if authors: 
+    #             auth = sql + "(Poet LIKE \"%"
+    #             auth += "%\" OR Poet LIKE \"%".join(authors)
+    #             auth += "%\") "
+    #             poe = pd.read_sql_query(auth, conn)
+    #             result += f.format_entries(poe)
+    #         if tags:
+    #             tag = sql + "(Tags LIKE \"%"
+    #             tag += "%\" OR Tags LIKE \"%".join(tags)
+    #             tag += "%\") "
+    #             poe = pd.read_sql_query(tag, conn)
+    #             result += f.format_entries(poe)
+    #     if len(result) == 0:
+    #         try: 
+    #             result = await asyncio.to_thread(lambda:requests.get(url+"/random").json())
+    #         except Exception as e:
+    #             logger.exception(f"poetryDB error: {e}")
+    #     return result
     
 
     # def register_preference_logging(mcp, url, engine):

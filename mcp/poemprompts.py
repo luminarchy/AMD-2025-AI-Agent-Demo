@@ -17,6 +17,8 @@ try:
     g = pyrhyme.RhymeBrain()
 except Exception as e:
     logger.debug(f"Error connecting to OpenAI chat completions API. Check to see if OpenAI url {openai_api_base} is declared correctly.")
+
+    
 def register_prompts(mcp):
     @mcp.tool
     def read_poem(poem: str, ctx: Context, themes: str = ""):
@@ -40,11 +42,11 @@ def register_prompts(mcp):
             return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
     
     @mcp.tool
-    def become_feedback(poem: str, ctx: Context):
+    async def become_feedback(poem: str, ctx: Context):
         """Gives constructive feedback for a user-written poem
             poem: the user-written poem that the user is asking for feedback for."""
         try: 
-            completion = client.chat.completions.create(
+            completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
                     "content": f"You are a detail-oriented poetry critic with a wide-bredth of knowledge on poetry. Whenever you read a poem, you always reference your knowledge to cross-compare styles, writing, themes, and imagery with those of famous authors. "
@@ -69,7 +71,7 @@ def register_prompts(mcp):
             word: the word to find a synonym for, can be auto-generated using conversation history. Does not have to be present in the poem. 
             poem: (Optional) the entire poem that the user is working on, If not given in the input, can be auto-filled with conversation history. """
         try:
-            completion = client.chat.completions.create(
+            completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
                     "content": f"You are a thesaurus with full knowledge of every word in the English language."
@@ -95,7 +97,7 @@ def register_prompts(mcp):
             poem: The entire poem that the user is working on. If not given in the input, can be filled in with conversation history."""
         try:
             results = g.rhyming_list(word, "en", maxResults = 50)
-            completion = client.chat.completions.create(
+            completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
                     "content": f"You are a dictionary with full knowledge of every word in the English language. Your job is to select several rhymes from a long list of rhyming words. "
@@ -118,7 +120,7 @@ def register_prompts(mcp):
             Poem: the entire poem that the user is working on. If not given in the input or if given in fragments, can be auto-filled using conversation history. 
             knowledge: any background information on poetry and """
         try:
-            completion = client.chat.completions.create(
+            completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
                     "content": f"You are a dictionary with full knowledge of every word in the English language. Your job is to fill in the blank when given a poem with a blank and return a list of possible words that can fit the poem."

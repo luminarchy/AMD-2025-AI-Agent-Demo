@@ -71,11 +71,10 @@ However, the MCP Server does NOT support any type of generation that attempts to
    ```sh
    pip install -r requirements
    ```
-
 4. Set up the OpenAI base url and key in `poemprompts.py`
    
    ```py
-    openai_api_base = "http://localhost:8001/v1"
+   openai_api_base = "http://localhost:8001/v1"
     openai_key = "EMPTY"
    ```
 
@@ -90,11 +89,11 @@ mcpo --port 8002 -- python poem.py
 
 For the best experience, please use a model that supports function calling. This can then be enabled with Open WebUI in the model's `advanced params`: `Function Calling = Native`.
 
-To set up the model, go to Open WebUI's workspace tab located on the left panel and in `Models`, create a new model titled "Poetry AI Assistant". In the custom model's settings, set the system prompt to the value stored under `System Prompt` in `setup.txt`. Choose the Base Model and save changes. 
-Next, go to the `admin panel`, and find the model that is connected to your OpenAI base url. Change that model's system prompt to the value stored under `Model Prompt` in setup.txt. Save the changes. 
-This will allow you to use a singular model as two separate AI agents, ensuring that all tool functions are called correctly. 
+To set up the model, go to Open WebUI's workspace tab located on the left panel and in `Models`, create a new model titled "Poetry AI Assistant". In the custom model's settings, set the system prompt to the value stored under `System Prompt` in `setup.txt`. Choose the Base Model and save changes.
+Next, go to the `admin panel`, and find the model that is connected to your OpenAI base url. Change that model's system prompt to the value stored under `Model Prompt` in setup.txt. Save the changes.
+This will allow you to use a singular model as two separate AI agents, ensuring that all tool functions are called correctly.
 
-The default AMD AI Agent project uses Open WebUI and vllm by default. Ensure that Open WebUI is running before starting up the server. This will allow the server to connect to vllm as the OpenAI endpoint for chat completions. MCPO will host a client connection to the server. Since Open WebUI does not have full support for MCP, the server will be connected as a tool server instead. In order to bypass this restriction, the Poetry MCP Server uses Open AI chat completions as a replacement for MCP sampling requests. If you are using a client that supports sampling, then simply replace the chat completions in `poemprompts.py` with FastMCP sampling, as this is a more integrated solution for chat completions. 
+The default AMD AI Agent project uses Open WebUI and vllm by default. Ensure that Open WebUI is running before starting up the server. This will allow the server to connect to vllm as the OpenAI endpoint for chat completions. MCPO will host a client connection to the server. Since Open WebUI does not have full support for MCP, the server will be connected as a tool server instead. In order to bypass this restriction, the Poetry MCP Server uses Open AI chat completions as a replacement for MCP sampling requests. If you are using a client that supports sampling, then simply replace the chat completions in `poemprompts.py` with FastMCP sampling, as this is a more integrated solution for chat completions.
 
 ✨ **For other Client connections**
 The server startup command is
@@ -103,7 +102,59 @@ The server startup command is
 python poem.py
 ```
 
-You can find sample system prompts in `setup.txt`. 
+You can find sample system prompts in `setup.txt`.
+
+### ✨ Tools ✨
+
+* **get_all_authors()**
+  * gets a list of all poets in the Poetry Foundation database
+  * Inputs:
+    * none
+* **get_author(*author_last, author_first*)**
+  * gets a list of the titles of all poems written by a poet
+  * Inputs:
+    * `author_last` (string) last name of poet to search for
+    * `author_first` (string, optional) first name of poet to search for
+* **get_complete_author(*author_last, author_first*)**
+  * gets a complete list of all poems written by a poet
+  * Inputs:
+    * `author_last` (string) last name of poet to search for
+    * `author_first` (string, optional) first name of poet to search for
+* **get_poem_title(*title*)**
+  * gets a poem by its title
+  * Inputs:
+    * `title` (string) title of poem to search for
+* **get_poems_keywords(*keyword*)**
+  * gets poems that contain a specific keyword
+  * Inputs:
+    * `keyword` (string) keyword to search for
+* **get_tag(*tag*)**
+  * gets poems under a Poetry Foundation tag
+  * Inputs:
+    * `tag` (string) tag to search for
+* **get_reference(*authors, tags*)**
+  * gets poems based on user preferences
+  * Inputs:
+    * `author` (Optional, list[string]) poets to search for
+    * `tag` (Optional, list[string]) tags to search for
+* **become_feedback(*poem*)**
+  * generates constructive feedback for a poem based on its structure, themes, rhythm, and rhyme
+  * Inputs:
+    * `poem` (string) user-submitted poem
+* **become_thesaurus(*poem, word*)**
+  * generates 5-10 synonyms for a word to be used in poem based on its theme
+  * Inputs:
+    * `poem` (string) user-submitted poem
+    * `word` (string) word to get synonyms for
+* **become_rhyme(*poem, word*)**
+  * generates 5-10 rhymes for a word to be used in poem based on its theme
+  * Inputs:
+    * `poem` (string) user-submitted poem
+    * `word` (string) word to get rhymes for
+* **become_word(*poem*)**
+  * generates 5-10 words to be used in poem based on its theme
+  * Inputs:
+    * `poem` (string) user-submitted poem with a fill-in-the-blank task
 
 ### ✨ Examples ✨
 
