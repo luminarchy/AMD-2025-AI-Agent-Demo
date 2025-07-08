@@ -2,3 +2,6 @@ fastmcp
 pandas
 mcpo
 pyrhyme
+sqlalchemy
+openai
+openpyxl

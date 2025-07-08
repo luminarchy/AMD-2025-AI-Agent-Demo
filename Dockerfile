@@ -1,24 +1,20 @@
-FROM rocm/vllm:latest
+FROM python
 # Install basic development tools
 RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+
+WORKDIR /mcp
+COPY mcp/poem.py .
+COPY mcp/poemtools.py .
+COPY mcp/poemprompts.py .
+COPY mcp/format.py .
+COPY mcp/PoetryFoundationData.xlsx .
+COPY mcp/requirements.txt .
+
 # Install additional dependencies
-RUN pip3 install --no-cache-dir \
-    transformers \
-    accelerate \
-    safetensors
+RUN pip3 install -r requirements.txt
 
-WORKDIR /home/amysuo12/amd2025test
 
-# Create directories for models and benchmarks
-RUN mkdir -p /data/benchmarks && \
-   chmod 777 /data/benchmarks
-
-# Make our entrypoint script executable
-COPY --chown=vllm:vllm entrypoint.sh .
-RUN chmod +x entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"] 
 

@@ -52,7 +52,7 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
 ### ✨ Prerequisites ✨
 
 * **Linux**: see the [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems).
-* **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html).
+* **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/ install-on-linux/en/latest/tutorial/quick-start.html).
 * **GPU**: AMD Instinct™ MI300X accelerator or [other ROCm-supported GPUs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html).
 * **Docker**: with Docker Compose - [install](https://docs.docker.com/engine/install/).
 
@@ -69,7 +69,7 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
    git remote set-url origin github_username/repo_name
    git remote -v # confirm the changes
    ```
-3. Run the docker compose file to build and start up OpenWebUI and the vLLM container
+3. Run the docker compose file to build and start up the containers
    
    ```sh
    docker compose up -d
@@ -107,33 +107,18 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
 
 ## 🌟 Usage 🌟
 
+✨ **If you are using the Poetry MCP Server**
+The Poetry mcp server code is set up in the `/mcp` directory which contains the scripts to run the MCP server as well as a separate README for the server contianing information about the recommended setup for Open WebUI. 
+
+To set up the model, go to Open WebUI's workspace tab located on the left panel and in `Models`, create a new model titled "Poetry AI Assistant". In the custom model's settings, set the system prompt to the value stored under `System Prompt` in `mcp/setup.txt`. Choose the Base Model and save changes.
+Next, go to the `admin panel`, and find the model that is connected to your OpenAI base url. Change that model's system prompt to the value stored under `Model Prompt` in setup.txt. Save the changes.
+This will allow you to use a singular model as two separate AI agents, ensuring that all tool functions are called correctly.
+
 ✨ **If you are hosting your own MCP server**
-The skeleton server is stored in the MCP file in `server.py`. To start the server, first install MCPO using pip:
+A skeleton test MCP server is located in the `/base-mcp` folder for convenience. Simply modify the Dockerfile to copy over your MCP server files to the docker container, and everything else should run smoothly. 
 
-```sh
-pip install mcpo
-```
 
-Then run:
-
-```sh
-mcpo --port 8002 -- python server.py
-```
-
-✨ **If you are hosting an MCP server from Smithery.ai**
-Install the server using auto install. You may have to install npm first.
-
-```sh
-sudo apt install npm
-```
-
-Then you can run the server with the given command from smithery inputted to mcpo.
-
-```sh
-mcpo --port 8004 -- <server start up command>
-```
-
-The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the url ``
+The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the server url. 
 
 ### ✨ Examples ✨
 
@@ -149,6 +134,15 @@ Command line logs with requests to the skeleton test server.
 
 * ![logs](assets/mcplogs.png)
 
+
+## 🌟 Troubleshooting 🌟
+
+* If Kokoro does not connect using the `localhost` url:
+  Find the docker container network url. In VSCode, locate the docker tab on the left menu bar and locate the parent docker container under the `networks` section and open the corresponding file. Find the network url for the Kokoro container in the file. 
+  
+  In Open WebUI, open the admin panel, and click the `Audio` tab. Under TTS, change the engine to `OpenAI`. Fill in the OpenAI base url with the docker container network url and fill in the OpenAI key with `not-needed`. Change the model name to `Kokoro`. To see all voices available, go to `http://localhost:8880/docs`. 
+
+  
 
 ## 🌟 License 🌟
 

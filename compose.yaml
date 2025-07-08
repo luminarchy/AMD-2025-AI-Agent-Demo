@@ -54,7 +54,6 @@ services:
     security_opt:
       - seccomp:unconfined
     ipc: "host"
-    network_mode: "host"
     expose:
       - "3000"
     group_add:
@@ -88,6 +87,18 @@ services:
       # what open webui needs to connect to vllm automatically
       ENABLE_OLLAMA_API: false
       AUDIO_TTS_OPENAI_API_BASE_URL: http://localhost:8880/v1
+  
+  mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "8002:8002"
+    depends_on: 
+      vllm:
+        condition: service_started
+    command: ["mcpo", "--port", "8002", "--", "python", "poem.py"]
+
 
 
   # kokoro-fastapi-cpu:
