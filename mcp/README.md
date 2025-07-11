@@ -156,39 +156,10 @@ You can find sample system prompts in `setup.txt`.
   * Inputs:
     * `poem` (string) user-submitted poem with a fill-in-the-blank task
 
-### ✨ Examples ✨
-
-This is the Open WebUI with two available MCP servers: the skeleton server `server.py` and the [Balldontlie server at smithery](https://smithery.ai/server/@mikechao/balldontlie-mcp "https://smithery.ai/server/@mikechao/balldontlie-mcp"),
-
-* ![tools](assets/toolservers.png)
-
-This is the response from the AI agent when using an MCP tool from the `Balldontlie` MCP server.
-
-* ![mcp1](assets/mcp1.png)
-
-Command line logs with requests to the skeleton test server.
-
-* ![logs](assets/mcplogs.png)
-
-## 🌟 License 🌟
-
-i also do not know what to put here
-
-<!-- CONTACT -->
-
 ## 🌟 Contact 🌟
 
 Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
 
 Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
 
-<!-- ACKNOWLEDGMENTS -->
-
-## 🌟 Acknowledgments 🌟
-
-* [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
-* [Smithery](https://smithery.ai/)
-* [BallDontLie API](https://www.balldontlie.io/)
-* [BallDontLie MCP Server](https://github.com/mikechao/balldontlie-mcp)
-* Furthermore i do not know what to put here
 

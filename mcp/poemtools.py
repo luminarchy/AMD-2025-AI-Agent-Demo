@@ -218,7 +218,7 @@ def register_tags(mcp, url, engine):
                 logger.exception(f"poetry foundation cannot find any poems under tag '{tag}'")
             else: 
                 # ctx.info(f"User requested tag, {tag}, and received poems, {f.format_list(poe["Title"])}. Related authors are {f.format_list(all)}.")
-                return f.format_entries(poe)
+                return f.format_entries(poe)[0:50]
 
     # @mcp.tool()
     # async def get_reference(authors: list[str], tags: list[str], ctx: Context):

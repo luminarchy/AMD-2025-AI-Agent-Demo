@@ -1,51 +1,27 @@
 from fastmcp import FastMCP, Context
 import logging
-from openai import OpenAI
+from openai import AsyncOpenAI
 import pyrhyme
+import os
 logger = logging.getLogger()
 
-openai_api_base = "http://localhost:8001/v1"
-openai_key = "EMPTY"
-try:
-    client = OpenAI(
-        # defaults to os.environ.get("OPENAI_API_KEY")
-        api_key=openai_key,
-        base_url=openai_api_base,
-    )
-    models = client.models.list()
-    model = models.data[0].id
-    g = pyrhyme.RhymeBrain()
-except Exception as e:
-    logger.debug(f"Error connecting to OpenAI chat completions API. Check to see if OpenAI url {openai_api_base} is declared correctly.")
-
+g = pyrhyme.RhymeBrain()
+openai_api_base = os.environ['OPENAI_API_BASE_URL']
+openai_key = os.environ['OPENAI_KEY']
+logger.info(f"url is {openai_api_base}")
+model = os.environ['OPENAI_MODEL']
     
 def register_prompts(mcp):
-    @mcp.tool
-    def read_poem(poem: str, ctx: Context, themes: str = ""):
-        """Generates a user message asking for an audio reading of a specified poem
-            poem: the poem that the user is asking to be read to them. Can be retrieved using context. 
-            themes: (Optional) any themes mentioned in the conversation context relating to the poem or author. """
-        try: 
-            completion = client.chat.completions.create(
-            messages=[{
-                "role": "system",
-                "content": "You are a dramatic performer of poetry, able to read poems with great emotional intensity and theatric flair."
-            }, {
-                "role": "user",
-                "content": f"Can you please do a vocal dramatic reading of this poem '{poem}' keeping in mind the themes we have discussed ({themes}) so that I can hear what it sounds like?" 
-            }],
-            model=model, #figure a way to make this a TTS model
-            )
-            return completion.choices[0].message.content
-        except Exception as e:
-            logger.debug(f"OpenAI chat completion error for read_poem: {e}")
-            return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
-    
     @mcp.tool
     async def become_feedback(poem: str, ctx: Context):
         """Gives constructive feedback for a user-written poem
             poem: the user-written poem that the user is asking for feedback for."""
         try: 
+            client = AsyncOpenAI(
+                # defaults to os.environ.get("OPENAI_API_KEY")
+                api_key=openai_key,
+                base_url=openai_api_base,
+            )
             completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
@@ -60,7 +36,7 @@ def register_prompts(mcp):
                 model=model, 
                 temperature = .1,
             )
-            return completion.choices[0].message.content
+            return f"return the following exactly as written to the user: {completion.choices[0].message.content}"
         except Exception as e:
             logger.debug(f"OpenAI chat completion error for become_feedback: {e}")
             return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
@@ -71,6 +47,11 @@ def register_prompts(mcp):
             word: the word to find a synonym for, can be auto-generated using conversation history. Does not have to be present in the poem. 
             poem: (Optional) the entire poem that the user is working on, If not given in the input, can be auto-filled with conversation history. """
         try:
+            client = AsyncOpenAI(
+                # defaults to os.environ.get("OPENAI_API_KEY")
+                api_key=openai_key,
+                base_url=openai_api_base,
+            )
             completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
@@ -95,7 +76,13 @@ def register_prompts(mcp):
         """Generate rhymes for a word in a poem
             word: the word to find a rhyme for, can be auto-generated using conversation history
             poem: The entire poem that the user is working on. If not given in the input, can be filled in with conversation history."""
+
         try:
+            client = AsyncOpenAI(
+                # defaults to os.environ.get("OPENAI_API_KEY")
+                api_key=openai_key,
+                base_url=openai_api_base,
+            )
             results = g.rhyming_list(word, "en", maxResults = 50)
             completion = await client.chat.completions.create(
                 messages=[{
@@ -120,6 +107,11 @@ def register_prompts(mcp):
             Poem: the entire poem that the user is working on. If not given in the input or if given in fragments, can be auto-filled using conversation history. 
             knowledge: any background information on poetry and """
         try:
+            client = AsyncOpenAI(
+                # defaults to os.environ.get("OPENAI_API_KEY")
+                api_key=openai_key,
+                base_url=openai_api_base,
+            )
             completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",

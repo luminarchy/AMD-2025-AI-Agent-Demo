@@ -4,8 +4,6 @@
 meow
 <div align="left">
 
-
-
 <!-- TABLE OF CONTENTS -->
 
 <details>
@@ -14,7 +12,7 @@ meow
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
       </ul>
     </li>
     <li>
@@ -38,12 +36,17 @@ meow
 
 ## 🌟 About The Project 🌟
 
-Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. The  open-source framework works similar to REST API and provides an interface that allows models to interact with data and context, universalizing the way that AI agents integrate into systems. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also contains a skeleton MCP server that can be integrated with OpenWebUI.
+Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. The  open-source framework works similar to REST API and provides an interface that allows models to interact with data and context, universalizing the way that AI agents integrate into systems. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also contains a poetry MCP server to demonstrate the utility of the agent.
 
+### ✨ How it Works ✨
 
-### ✨ Built With ✨
+The AI agent uses Open WebUI for its user interface, which allow for a seamless integration with Whisper and Kokoro for STT and TTS capabilities. For the OpenAI model connecton, it uses the rocm instance of vllm to serve the Salesforce xLAM 2 model. The xLAM series is known for its effectiveness with native tool calling and xLAM hosts its own tool parser which is used for auto tool choice. Open WebUI uses MCPO for its MCP client connection, which hosts the MCP as a tool server; however, this limits the MCP to just its tool capabilities.
 
-* not entirely sure what to put here
+MCPO exposes the tools on the MCP server to the AI agent on Open WebUI allowing the agent to choose whichever tools it may need for a request. The Poetry MCP tools can separated into two categories. One, labeled using "get", fetches data from a Poetry Foundation dataset loaded into the server using SQLite queries. The other, labeled using "become", uses OpenAPI chat completions for guided word generation or feedback generation. The chat completions use the same model as the one backing the Open WebUI AI agent; however, it works separately from the agent. There are two vllm endpoints that run simultaneously. Both use the same model for reasoning; however, they are fed different context and system prompts, and therefore, are assigned different tasks to complete. This is necessary, because the xLAM model on its own is prone to hallucination when tasked with generation of constructive criticism or rhymes, and must be guided with the necessary system prompts to provide the most accurate information as possible.
+
+The response from each tool that the AI agent calls is then fed back into the agent where it decides if the information that it has is enough to answer the user input. If it is not, it cycles through the tool calling cycle until it decides that the information is enough. Once the AI Agent reaches that point, it builds a response using the information that it retrieved from the tool calls and returns that back out to the user.
+
+* ![flowchart](assets/flowchart.drawio.png)
 
 <!-- GETTING STARTED -->
 
@@ -108,52 +111,62 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
 ## 🌟 Usage 🌟
 
 ✨ **If you are using the Poetry MCP Server**
-The Poetry mcp server code is set up in the `/mcp` directory which contains the scripts to run the MCP server as well as a separate README for the server contianing information about the recommended setup for Open WebUI. 
+The Poetry mcp server code is set up in the `/mcp` directory which contains the scripts to run the MCP server as well as a separate README for the server contianing information about the recommended setup for Open WebUI.
 
 To set up the model, go to Open WebUI's workspace tab located on the left panel and in `Models`, create a new model titled "Poetry AI Assistant". In the custom model's settings, set the system prompt to the value stored under `System Prompt` in `mcp/setup.txt`. Choose the Base Model and save changes.
 Next, go to the `admin panel`, and find the model that is connected to your OpenAI base url. Change that model's system prompt to the value stored under `Model Prompt` in setup.txt. Save the changes.
 This will allow you to use a singular model as two separate AI agents, ensuring that all tool functions are called correctly.
 
 ✨ **If you are hosting your own MCP server**
-A skeleton test MCP server is located in the `/base-mcp` folder for convenience. Simply modify the Dockerfile to copy over your MCP server files to the docker container, and everything else should run smoothly. 
+A skeleton test MCP server is located in the `/base-mcp` folder for convenience. Simply modify the Dockerfile to copy over your MCP server files to the docker container, and everything else should run smoothly.
 
-
-The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the server url. 
+The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the server url.
 
 ### ✨ Examples ✨
 
-This is the Open WebUI with two available MCP servers: the skeleton server `server.py` and the [Balldontlie server at smithery](https://smithery.ai/server/@mikechao/balldontlie-mcp "https://smithery.ai/server/@mikechao/balldontlie-mcp"),
+This is the Open WebUI with the Poetry AI agent
+* ![tools](assets/home.png)
 
-* ![tools](assets/toolservers.png)
+This is what the MCP server shows up as on Open WebUI.
 
-This is the response from the AI agent when using an MCP tool from the `Balldontlie` MCP server.
+* ![mcp1](assets/mcp.png)
 
-* ![mcp1](assets/mcp1.png)
+Prompting the MCP server for a random poem by W.B. Yeats. Shows tool-chaining and native function calling. The AI agent first searches for a poem by Yeats under the name "random". Then retrieves a list of all poems written by Yeats and randomly selects a poem title. It then searches for that poem in the database and returns the full poem.  
 
-Command line logs with requests to the skeleton test server.
+* ![logs](assets/random2.png)
 
-* ![logs](assets/mcplogs.png)
+Asking the MCP server for Yeats main themes. Shows post-processing of tool calls, as the MCP tool returns all poems and corresponding tags by Yeats and agent has to process that information to find top most common tags. 
 
+* ![logs](assets/theme.png)
+
+Asking the AI agent for a rhyme. 
+
+* ![logs](assets/rhyme1.png)
+
+Rhyme response:
+
+* ![logs](assets/rhyme2.png)
+
+Asking the AI agent for synonyms and response using the same poem from the previous chat.
+
+* ![logs](assets/thesaurus.png)
 
 ## 🌟 Troubleshooting 🌟
 
 * If Kokoro does not connect using the `localhost` url:
-  Find the docker container network url. In VSCode, locate the docker tab on the left menu bar and locate the parent docker container under the `networks` section and open the corresponding file. Find the network url for the Kokoro container in the file. 
+  Find the docker container network url. In VSCode, locate the docker tab on the left menu bar and locate the parent docker container under the `networks` section and open the corresponding file. Find the network url for the Kokoro container in the file.
   
-  In Open WebUI, open the admin panel, and click the `Audio` tab. Under TTS, change the engine to `OpenAI`. Fill in the OpenAI base url with the docker container network url and fill in the OpenAI key with `not-needed`. Change the model name to `Kokoro`. To see all voices available, go to `http://localhost:8880/docs`. 
+  In Open WebUI, open the admin panel, and click the `Audio` tab. Under TTS, change the engine to `OpenAI`. Fill in the OpenAI base url with the docker container network url and fill in the OpenAI key with `not-needed`. Change the model name to `Kokoro`. To see all voices available, go to `http://localhost:8880/docs`.
 
-  
+* If STT does not work:
+  Try adding audio types to the "Supported MIME Types" field in the `Audio` admin panel setting. 
 
-## 🌟 License 🌟
-
-i also do not know what to put here
 
 <!-- CONTACT -->
 
 ## 🌟 Contact 🌟
 
 Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
-
 
 Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
 
@@ -162,8 +175,6 @@ Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://git
 ## 🌟 Acknowledgments 🌟
 
 * [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
-* [Smithery](https://smithery.ai/)
-* [BallDontLie API](https://www.balldontlie.io/)
-* [BallDontLie MCP Server](https://github.com/mikechao/balldontlie-mcp)
-* Furthermore i do not know what to put here
+* [the random person on reddit who made the poetry foundation dataset](https://www.kaggle.com/datasets/tgdivy/poetry-foundation-poems)
+
 

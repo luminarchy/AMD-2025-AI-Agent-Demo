@@ -78,7 +78,6 @@ services:
     
     volumes:
       - /home/amysuo12/amd2025test/open-webui:/app/backend/data
-      - /home/amysuo12/amd2025test/mcp_config.json:/app/backend/data/mcp_config.json
     devices:
       - /dev/kfd
       - /dev/dri    
@@ -95,8 +94,11 @@ services:
     ports: 
       - "8002:8002"
     depends_on: 
-      vllm:
-        condition: service_started
+      - vllm
+    environment:
+      OPENAI_API_BASE_URL: "http://vllm:8001/v1"
+      OPENAI_KEY: "EMPTY"
+      OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r"
     command: ["mcpo", "--port", "8002", "--", "python", "poem.py"]
 
 
