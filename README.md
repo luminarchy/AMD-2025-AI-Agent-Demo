@@ -40,6 +40,8 @@ Model Context Protocols (MCPs) have brought a new perspective on AI and Large La
 
 ### ✨ How it Works ✨
 
+* ![architecture](assets/arch.png)
+
 The AI agent uses Open WebUI for its user interface, which allow for a seamless integration with Whisper and Kokoro for STT and TTS capabilities. For the OpenAI model connecton, it uses the rocm instance of vllm to serve the Salesforce xLAM 2 model. The xLAM series is known for its effectiveness with native tool calling and xLAM hosts its own tool parser which is used for auto tool choice. Open WebUI uses MCPO for its MCP client connection, which hosts the MCP as a tool server; however, this limits the MCP to just its tool capabilities.
 
 MCPO exposes the tools on the MCP server to the AI agent on Open WebUI allowing the agent to choose whichever tools it may need for a request. The Poetry MCP tools can separated into two categories. One, labeled using "get", fetches data from a Poetry Foundation dataset loaded into the server using SQLite queries. The other, labeled using "become", uses OpenAPI chat completions for guided word generation or feedback generation. The chat completions use the same model as the one backing the Open WebUI AI agent; however, it works separately from the agent. There are two vllm endpoints that run simultaneously. Both use the same model for reasoning; however, they are fed different context and system prompts, and therefore, are assigned different tasks to complete. This is necessary, because the xLAM model on its own is prone to hallucination when tasked with generation of constructive criticism or rhymes, and must be guided with the necessary system prompts to provide the most accurate information as possible.
@@ -125,21 +127,22 @@ The MCP server should automatically connect to the running OpenWebUI image. If i
 ### ✨ Examples ✨
 
 This is the Open WebUI with the Poetry AI agent
+
 * ![tools](assets/home.png)
 
 This is what the MCP server shows up as on Open WebUI.
 
 * ![mcp1](assets/mcp.png)
 
-Prompting the MCP server for a random poem by W.B. Yeats. Shows tool-chaining and native function calling. The AI agent first searches for a poem by Yeats under the name "random". Then retrieves a list of all poems written by Yeats and randomly selects a poem title. It then searches for that poem in the database and returns the full poem.  
+Prompting the MCP server for a random poem by W.B. Yeats. Shows tool-chaining and native function calling. The AI agent first searches for a poem by Yeats under the name "random". Then retrieves a list of all poems written by Yeats and randomly selects a poem title. It then searches for that poem in the database and returns the full poem.
 
 * ![logs](assets/random2.png)
 
-Asking the MCP server for Yeats main themes. Shows post-processing of tool calls, as the MCP tool returns all poems and corresponding tags by Yeats and agent has to process that information to find top most common tags. 
+Asking the MCP server for Yeats main themes. Shows post-processing of tool calls, as the MCP tool returns all poems and corresponding tags by Yeats and agent has to process that information to find top most common tags.
 
 * ![logs](assets/theme.png)
 
-Asking the AI agent for a rhyme. 
+Asking the AI agent for a rhyme.
 
 * ![logs](assets/rhyme1.png)
 
@@ -157,10 +160,8 @@ Asking the AI agent for synonyms and response using the same poem from the previ
   Find the docker container network url. In VSCode, locate the docker tab on the left menu bar and locate the parent docker container under the `networks` section and open the corresponding file. Find the network url for the Kokoro container in the file.
   
   In Open WebUI, open the admin panel, and click the `Audio` tab. Under TTS, change the engine to `OpenAI`. Fill in the OpenAI base url with the docker container network url and fill in the OpenAI key with `not-needed`. Change the model name to `Kokoro`. To see all voices available, go to `http://localhost:8880/docs`.
-
 * If STT does not work:
-  Try adding audio types to the "Supported MIME Types" field in the `Audio` admin panel setting. 
-
+  Try adding audio types to the "Supported MIME Types" field in the `Audio` admin panel setting.
 
 <!-- CONTACT -->
 
@@ -176,5 +177,4 @@ Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://git
 
 * [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
 * [the random person on reddit who made the poetry foundation dataset](https://www.kaggle.com/datasets/tgdivy/poetry-foundation-poems)
-
 
