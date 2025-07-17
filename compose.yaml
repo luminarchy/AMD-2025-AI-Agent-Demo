@@ -99,7 +99,7 @@ services:
       OPENAI_API_BASE_URL: "http://vllm:8001/v1"
       OPENAI_KEY: "EMPTY"
       OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r"
-    command: ["mcpo", "--port", "8002", "--", "python", "poem.py"]
+    command: ["mcpo", "--host", "0.0.0.0", "--port", "8002", "--", "python", "poem.py"]
 
 
 

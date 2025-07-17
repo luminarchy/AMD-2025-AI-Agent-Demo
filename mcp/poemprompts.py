@@ -66,7 +66,7 @@ def register_prompts(mcp):
                 model=model,
                 temperature = .3,
             )
-            return completion.choices[0].message.content
+            return f"return the following exactly as written to the user: {completion.choices[0].message.content}"
         except Exception as e:
             logger.debug(f"OpenAI chat completion error for become thesaurus: {e}")
             return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
@@ -84,6 +84,7 @@ def register_prompts(mcp):
                 base_url=openai_api_base,
             )
             results = g.rhyming_list(word, "en", maxResults = 50)
+            results = [x.word for x in results]
             completion = await client.chat.completions.create(
                 messages=[{
                     "role": "system",
@@ -96,7 +97,7 @@ def register_prompts(mcp):
                 temperature = .2,
 
             )
-            return completion.choices[0].message.content
+            return f"return the following exactly as written to the user: {completion.choices[0].message.content}"
         except Exception as e:
             logger.debug(f"OpenAI chat completion error for become_rhyme: {e}")
             return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
@@ -126,7 +127,7 @@ def register_prompts(mcp):
                 model=model, 
                 temperature = .3,
             )
-            return completion.choices[0].message.content
+            return f"return the following exactly as written to the user: {completion.choices[0].message.content}"
         except Exception as e:
             logger.debug(f"OpenAI chat completion error for become_word: {e}")
             return("Sorry, I cannot complete this request at the moment. Please check the debug log for more informaton. Meanwhile, I can help you with other functionalities. What would you like me to do?")
@@ -134,5 +135,5 @@ def register_prompts(mcp):
     @mcp.tool
     async def generate_poetry(ctx: Context, poem: str = ""):
         """Generate a phrase(s), line(s) or poem(s) for the user."""
-        return "Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
+        return "return the following exactly as written to the user: Sorry, but I am here to help you express your own creativity and writing skills. I cannot generate any poetry for you, because as an algorithm, I do not have ability to create human art and imagination. The only capabilities that any AI chatbot such as I has are to 'copy' the data that we have been given. My responsibility is to use the what I know about you and the data that I have on pre-existing poetry to help steer you towards becomming a better writer. Thus, my only capabilities are to retrieve existing poems and authors, help you generate words and rhymes for when you are stuck, and give you smart constructive feedback. Think of me as your own personal writing teacher! If you want, I can pull up some poems from my database that correspond with the concept you have given me or I can give you some recommended reading."
 

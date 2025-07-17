@@ -70,7 +70,7 @@ def register_authors(mcp, url, engine):
                 logger.exception(f"poetry foundation invalid author name: {author_first} {author_last}")
                 return "Not Found"
             elif authors.shape[0] > 1:
-                return ("There are multiple authors found in the database: " + f.format_list(authors) + ". Which one did you mean?")
+                return (f"There are multiple authors found in the database: {f.format_list(authors)}. Which one did you mean?")
             else: 
                 
                 authors = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
@@ -82,7 +82,7 @@ def register_authors(mcp, url, engine):
 def register_poems(mcp, engine):
     @mcp.tool()
     async def get_poem_title(title: str, ctx: Context, author_last: str = "", author_first: str = ""): 
-        """gets a poem by the title. Optionally can filter by author. 
+        """retrieves a poem by its title. Optionally can filter by author. 
             title: title of the poem
             author_last: Last name of the poet to search by. Can be auto-generated using conversation history.  
             author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. 
