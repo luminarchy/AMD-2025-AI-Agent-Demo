@@ -12,6 +12,7 @@ dbname = os.environ['DB_NAME']
 dbfile = os.environ['DB_FILE']
 dbid = int(os.environ['DB_ID'])
 numcols = int(os.environ['NUM_COLS'])
+count = 0
 
 def read_sql_query(con, stmt):
     return pd.read_sql_query(stmt, con)
@@ -22,11 +23,13 @@ async def initialize_tools(mcp: FastMCP):
     convert = {}
     for i in range(numcols):
         convert[i] = rep
-    pf = pd.read_excel(dbfile, header = 0, index_col = None, converters = convert)
+    pf = pd.read_excel(dbfile, header = 0, index_col = 0, converters = convert)
+    pf.index.name = 'id'
     engine = create_async_engine('sqlite+aiosqlite:///./test.db', echo=False)
-    parameters["id"]
-    parameters = pf.columns.tolist()
-    
+    parameters = ["id"]
+    parameters.extend(pf.columns.tolist())
+    global count 
+    count += len(pf)
     logger.info(f"Database parameters: {parameters}")
     async with engine.connect() as conn, conn.begin():
         await conn.run_sync(partial(pf.to_sql, dbname))
@@ -180,7 +183,7 @@ def register_select(mcp, engine, parameters):
 def register_insert(mcp, engine, parameters):
     @mcp.tool()
     async def put_entry(values: dict, ctx: Context): 
-        """Inserts an entry into the databaseHome
+        """Inserts a singular entry into the databaseHome
         Questions
         AI Assist
         Labs
@@ -190,23 +193,32 @@ def register_insert(mcp, engine, parameters):
             """
         
         async with engine.connect() as conn, conn.begin():
-            sql = f"INSERT INTO {dbname} VALUES("
-            for p in range(len(parameters)):
-                sql += f"'{values.get(parameters[p], None)}'"
-                if p != len(parameters) - 1:
-                    sql += ", "
-            sql += ")"
-            if dbid != -1:
-                sql += f" ON CONFLICT({parameters[dbid]}) DO (UPDATE {dbname} SET "
-                for p in range(len(parameters)):
-                    sql += f"{parameters[p]} = {values.get(parameters[p], None)}"
-                    if p != len(parameters) - 1:
-                        sql += ", "
-                sql += f" WHERE {parameters[dbid]} = {values.get(parameters[dbid])}"
-            logger.info(f"generated sql query: {sql}")
+            df = {}
+            # sql = f"INSERT INTO {dbname} VALUES("
+            for p in range(1, len(parameters)):
+                df[parameters[p]] = [values.get(parameters[p], None)]
+
+            #     sql += f"'{values.get(parameters[p], None)}'"
+            #     if p != len(parameters) - 1:
+            #         sql += ", "
+            # sql += ")"
+
+            # if dbid != -1:
+            #     sql += f" ON CONFLICT({parameters[dbid]}) DO (UPDATE {dbname} SET "
+            #     for p in range(len(parameters)):
+            #         sql += f"{parameters[p]} = {values.get(parameters[p], None)}"
+            #         if p != len(parameters) - 1:
+            #             sql += ", "
+            #     sql += f" WHERE {parameters[dbid]} = {values.get(parameters[dbid])}"
+            # logger.info(f"generated sql query: {sql}")
+            global count
+            df = pd.DataFrame(df, index = [count + 1])
+            df.index.name = "id"
+            logger.info(f"Inserting data: \n {df}")
             try:
-                result = await conn.run_sync(partial(pd.read_sql_query, sql))
-                logger.info(f"successfully executing sql query: {result}")
+                
+                await conn.run_sync(partial(df.to_sql, name = dbname, if_exists = 'append'))
+                logger.info(f"sucessfully inserting into db")
                 return "Successfully updated database"
             except Exception as e:
                 logger.exception(f"Database insert error: {e}")
