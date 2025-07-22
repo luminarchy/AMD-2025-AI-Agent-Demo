@@ -91,9 +91,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.base
-    expose:
-      - "3000"
-    ipc: "host"
+    ports: 
+      - "8002:8002"
     depends_on: 
       - vllm
     environment:
@@ -102,7 +101,7 @@ services:
       # OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r"
       DB_NAME: "database"
       DB_FILE: "database.xlsx"
-      DB_ID: "id"
+      DB_ID: 0
       NUM_COLS: 3
       
     command: ["mcpo", "--port", "8002", "--", "python", "server.py"]

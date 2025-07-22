@@ -1,16 +1,21 @@
 from fastmcp import FastMCP
 from tools import initialize_tools
 import logging
+import asyncio
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
-mcp = FastMCP("base mcp server", port = "8002")
-initialize_tools(mcp)
+
+async def main():
+    logger = logging.getLogger(__name__)
+    logging.basicConfig(level=logging.DEBUG)
+    mcp = FastMCP("base mcp server", port = "8002")
+    await initialize_tools(mcp)
+    mcp.run(transport='stdio')
 
 
 if __name__ == "__main__":
     print("Starting MCP server on port")
-    mcp.run(transport='stdio')
+    asyncio.run(main())
+    
 
 # command to run: mcpo --port 8002 -- python poem.py
 

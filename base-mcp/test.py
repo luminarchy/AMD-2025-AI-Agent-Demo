@@ -7,4 +7,7 @@ for i in range(3):
     convert.update({i+1: rep})
 pf = pd.read_excel("database.xlsx", header = 0, index_col=0, converters = convert)
 engine = create_engine('sqlite://', echo=False)
-print(pf)
+parameter = "name"
+parameters = pf.columns.tolist()
+if parameter in parameters:
+    print(parameters)
