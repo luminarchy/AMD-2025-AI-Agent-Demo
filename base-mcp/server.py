@@ -3,7 +3,7 @@ from tools import initialize_tools
 import logging
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename='myapp.log', level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 mcp = FastMCP("base mcp server", port = "8002")
 initialize_tools(mcp)
 
