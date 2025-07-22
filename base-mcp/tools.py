@@ -1,7 +1,7 @@
 from fastmcp import FastMCP, Context
 import logging
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine
 from functools import partial
 import format as f
 import os
@@ -21,12 +21,14 @@ async def initialize_tools(mcp: FastMCP):
     rep = lambda x: str(x).replace("_x000D_", "").strip()
     convert = {}
     for i in range(numcols):
-        convert[i+1] = rep
-    pf = pd.read_excel(dbfile, header = 0, index_col=0, converters = convert)
-    engine = create_engine('sqlite+aiosqlite:///./test.db', echo=False)
+        convert[i] = rep
+    pf = pd.read_excel(dbfile, header = 0, index_col = None, converters = convert)
+    engine = create_async_engine('sqlite+aiosqlite:///./test.db', echo=False)
+    parameters["id"]
     parameters = pf.columns.tolist()
+    
     logger.info(f"Database parameters: {parameters}")
-    async with engine.connect() as conn:
+    async with engine.connect() as conn, conn.begin():
         await conn.run_sync(partial(pf.to_sql, dbname))
     register_select(mcp, engine, parameters)
     register_insert(mcp, engine, parameters)
@@ -46,7 +48,8 @@ def register_select(mcp, engine, parameters):
             if parameter not in parameters:
                 return f"Search parameter {parameter} does not match database column names. Please reformat query values and try again. Accepted parameter values: {parameters}"
             try:
-                result = pd.read_sql_query(f"SELECT * FROM {dbname} WHERE {parameter} LIKE \"%{value}%\" LIMIT {limit}", conn)
+                sql = f"SELECT * FROM {dbname} WHERE {parameter} LIKE \"%{value}%\" LIMIT {limit}"
+                result = await conn.run_sync(partial(pd.read_sql_query, sql))
                 logger.info(f"successfully executing sql query: {result}")
                 if result.shape[0] == 0:
                     logger.exception(f"database invalid value, {value}, in parameter, {parameter}.")
@@ -56,8 +59,8 @@ def register_select(mcp, engine, parameters):
                     # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
                     return f.format_entries(result, parameters)
             except Exception as e:
-                logger.exception(f"Database insert error: {e}")
-                return "Error updating database"
+                logger.exception(f"Database query error: {e}")
+                return "Error searching database"
 
     
     @mcp.tool()
@@ -85,7 +88,7 @@ def register_select(mcp, engine, parameters):
             sql += f" LIMIT {limit}"
             logger.info(f"generated sql query: {sql}")
             try:
-                result = pd.read_sql_query(sql, conn)
+                result = await conn.run_sync(partial(pd.read_sql_query, sql))
                 logger.info(f"successfully executing sql query: {result}")
                 if result.shape[0] == 0:
                     logger.exception(f"database invalid values, {value}, in parameters, {parameter}.")
@@ -95,8 +98,8 @@ def register_select(mcp, engine, parameters):
                     # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
                     return f.format_entries(result, parameters)
             except Exception as e:
-                logger.exception(f"Database insert error: {e}")
-                return "Error updating database"
+                logger.exception(f"Database query error: {e}")
+                return "Error searching database"
         
     @mcp.tool()
     async def get_one_parameter_mult(parameter: str, value: list[str], ctx: Context, al:bool = True, limit: int = 10): 
@@ -122,7 +125,7 @@ def register_select(mcp, engine, parameters):
             sql += f" LIMIT {limit}"
             logger.info(f"generated sql query: {sql}")
             try:
-                result = pd.read_sql_query(sql, conn)
+                result = await conn.run_sync(partial(pd.read_sql_query, sql))
                 logger.info(f"successfully executing sql query: {result}")
                 if result.shape[0] == 0:
                     logger.exception(f"database invalid values, {value}, in parameter, {parameter}.")
@@ -132,8 +135,8 @@ def register_select(mcp, engine, parameters):
                     # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
                     return f.format_entries(result, parameters)
             except Exception as e:
-                logger.exception(f"Database insert error: {e}")
-                return "Error updating database"
+                logger.exception(f"Database query error: {e}")
+                return "Error searching database"
     
     @mcp.tool()
     async def get_mult_parameter_mult(parameter: list[str], value: list[list[str]], ctx: Context, al: bool = True, limit: int = 10): 
@@ -160,7 +163,7 @@ def register_select(mcp, engine, parameters):
             sql += f" LIMIT {limit}"
             logger.info(f"generated sql query: {sql}")
             try:
-                result = pd.read_sql_query(sql, conn)
+                result = await conn.run_sync(partial(pd.read_sql_query, sql))
                 logger.info(f"successfully executing sql query: {result}")
                 if result.shape[0] == 0:
                     logger.exception(f"database invalid values, {value}, in parameters, {parameter}.")
@@ -170,8 +173,8 @@ def register_select(mcp, engine, parameters):
                     # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
                     return f.format_entries(result, parameters)
             except Exception as e:
-                logger.exception(f"Database insert error: {e}")
-                return "Error updating database"
+                logger.exception(f"Database query error: {e}")
+                return "Error searching database"
             
 
 def register_insert(mcp, engine, parameters):
@@ -187,11 +190,12 @@ def register_insert(mcp, engine, parameters):
             """
         
         async with engine.connect() as conn, conn.begin():
-            sql = f"INSERT INTO {dbname}({parameters}) VALUES('"
+            sql = f"INSERT INTO {dbname} VALUES("
             for p in range(len(parameters)):
-                sql += f"{values.get(parameters[p], None)}'"
+                sql += f"'{values.get(parameters[p], None)}'"
                 if p != len(parameters) - 1:
-                    sql += ", ')"
+                    sql += ", "
+            sql += ")"
             if dbid != -1:
                 sql += f" ON CONFLICT({parameters[dbid]}) DO (UPDATE {dbname} SET "
                 for p in range(len(parameters)):

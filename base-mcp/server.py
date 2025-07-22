@@ -9,7 +9,7 @@ async def main():
     logging.basicConfig(level=logging.DEBUG)
     mcp = FastMCP("base mcp server", port = "8002")
     await initialize_tools(mcp)
-    mcp.run(transport='stdio')
+    await mcp.run_async(transport='stdio')
 
 
 if __name__ == "__main__":
