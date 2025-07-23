@@ -197,6 +197,7 @@ def register_insert(mcp, engine, parameters):
             # sql = f"INSERT INTO {dbname} VALUES("
             for p in range(1, len(parameters)):
                 df[parameters[p]] = [values.get(parameters[p], None)]
+                
 
             #     sql += f"'{values.get(parameters[p], None)}'"
             #     if p != len(parameters) - 1:
@@ -211,13 +212,14 @@ def register_insert(mcp, engine, parameters):
             #             sql += ", "
             #     sql += f" WHERE {parameters[dbid]} = {values.get(parameters[dbid])}"
             # logger.info(f"generated sql query: {sql}")
+            logger.info(f"dict: {df}")
             global count
             df = pd.DataFrame(df, index = [count + 1])
             df.index.name = "id"
             logger.info(f"Inserting data: \n {df}")
             try:
-                
-                await conn.run_sync(partial(df.to_sql, name = dbname, if_exists = 'append'))
+                slq = lambda x: df.to_sql(dbname, x, if_exists = 'append')
+                await conn.run_sync(slq)
                 logger.info(f"sucessfully inserting into db")
                 return "Successfully updated database"
             except Exception as e:
