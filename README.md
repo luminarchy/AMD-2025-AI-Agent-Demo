@@ -119,8 +119,14 @@ To set up the model, go to Open WebUI's workspace tab located on the left panel 
 Next, go to the `admin panel`, and find the model that is connected to your OpenAI base url. Change that model's system prompt to the value stored under `Model Prompt` in setup.txt. Save the changes.
 This will allow you to use a singular model as two separate AI agents, ensuring that all tool functions are called correctly.
 
-✨ **If you are hosting your own MCP server**
-A skeleton test MCP server is located in the `/base-mcp` folder for convenience. Simply modify the Dockerfile to copy over your MCP server files to the docker container, and everything else should run smoothly.
+✨ **If you are hosting the base MCP server**
+
+* The base MCP server uses the same underlying architecture of the Poetry MCP server to query and insert into any labeled dataset.
+* First upload your database into the base-mcp folder as `database.xlsx` file or replace the existing file with your dataset and modify the code if need be.
+* A separate Dockerfile is provided for the base MCP as `Dockerfile.base` in the parent directory. Ensure that the all of the necessary files in base-mcp are copied in the Dockerfile.
+* Modify the Docker Compose so that the `dockerfile` parameter is set to `Dockerfile.base`
+* Modify the `NUM_COLS` environment variable in the docker compose to be the number of data columns in your dataset
+* You can startup the server normally, but ensure that Open WebUI is configured for your application. 
 
 The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the server url.
 

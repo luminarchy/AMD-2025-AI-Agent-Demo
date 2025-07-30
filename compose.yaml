@@ -19,7 +19,7 @@ services:
     cap_add:
       - SYS_PTRACE
     environment: 
-      HIP_VISIBLE_DEVICES: 2,3
+      HIP_VISIBLE_DEVICES: 4,5
       #ROCR_VISIBLE_DEVICES: 5,6
 
       # one of these makes it work and idk which ones
@@ -82,27 +82,32 @@ services:
       - /dev/kfd
       - /dev/dri    
     environment:
-      OPENAI_API_BASE_URL: "http://vllm:8001/v1"
+      ENV: "dev"
+      OPENAI_API_BASE_URL: "http://vllm:8001/v1" # VLLM model connection
       # what open webui needs to connect to vllm automatically
       ENABLE_OLLAMA_API: false
-      AUDIO_TTS_OPENAI_API_BASE_URL: http://localhost:8880/v1
+      AUDIO_TTS_OPENAI_API_BASE_URL: http://localhost:8880/v1 #Kokoro connection
   
   mcp:
     build:
       context: .
-      dockerfile: Dockerfile.base
+      # change to Dockerfile.base if using base mcp
+      dockerfile: Dockerfile
     ports: 
       - "8002:8002"
     depends_on: 
       - vllm
     environment:
-      # OPENAI_API_BASE_URL: "http://vllm:8001/v1"
-      # OPENAI_KEY: "EMPTY"
-      # OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r"
-      DB_NAME: "database"
-      DB_FILE: "database.xlsx"
-      DB_ID: -1
-      NUM_COLS: 3
+      # Poetry MCP env vars
+      OPENAI_API_BASE_URL: "http://vllm:8001/v1" # connection to vllm instance for chat completions 
+      OPENAI_KEY: "EMPTY" # OPENAI key
+      OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r" # model to use for chat completions
+
+      # base MCP env vars 
+      DB_NAME: "database" # database name to be used (can be anything)
+      DB_FILE: "database.xlsx" # filename for the database
+      DB_ID: -1 # index of unique ID column
+      NUM_COLS: 3 # number of data columns in dataset
       
     command: ["mcpo", "--port", "8002", "--", "python", "server.py"]
 
