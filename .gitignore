@@ -1,3 +1,8 @@
 .env
 open-webui
 notes.txt
+.vscode
+config.json
+filters
+knowledge
+images

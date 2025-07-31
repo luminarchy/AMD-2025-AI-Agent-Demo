@@ -8,11 +8,11 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 mcp = FastMCP("poetry server", port = "8002")
-initialize_tools(mcp)
-register_prompts(mcp)
+initialize_tools(mcp) # register "get" tools
+register_prompts(mcp) # register "become" or word generation tools
 #register_knowledge(mcp)
 
-
+# start the MCP server
 if __name__ == "__main__":
     print("Starting MCP server on port")
     mcp.run()

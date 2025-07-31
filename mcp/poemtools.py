@@ -10,16 +10,18 @@ logger = logging.getLogger(__name__)
 
 
 def initialize_tools(mcp: FastMCP):
-    logger.info("setup started")
-    url = "https://poetrydb.org"
-    rep = lambda x: x.replace("_x000D_", "").strip()
+    """Set up MCP tools """
+    logger.info("setup started") 
+    url = "https://poetrydb.org" # backup url
+    rep = lambda x: x.replace("_x000D_", "").strip() # lambda func to strip whitespace from entries
+    # read dataset into pandas dataframe and apply conversion func on all columns
     pf = pd.read_excel("PoetryFoundationData.xlsx", header = 0, index_col=0, usecols = "A:E", converters = {1: rep, 2: rep, 3: rep, 4: rep})
-    engine = create_engine('sqlite://', echo=False)
-    pf.to_sql(name='poemsf', con=engine)
-    register_authors(mcp, url, engine)
-    register_poems(mcp, engine)
+    engine = create_engine('sqlite://', echo=False) # setup sqlite engine
+    pf.to_sql(name='poemsf', con=engine) # convert to sql database using engine
+    register_authors(mcp, url, engine) # register author query tools
+    register_poems(mcp, engine) #register poem query tools
     # register_lines(mcp, url, engine)
-    register_tags(mcp, url, engine)
+    register_tags(mcp, url, engine) # register tag query tools
     logger.info("setup ended")
 
 def register_authors(mcp, url, engine):
@@ -40,17 +42,22 @@ def register_authors(mcp, url, engine):
         author_last: the last name of the author to search by. 
         author_first: Optional, the first name of the author to search by if specified."""
         with engine.connect() as conn, conn.begin():
+            # first search for all instances of author name
             if author_first != "":
+                # if first name has been provided, search using both first and last name
                 authors = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             else: 
+                # otherwise search using just last name
                 authors = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%{author_last}%\"", conn)
             if authors.shape[0] == 0:
+                # if no authors have been found
                 logger.exception(f"poetry foundation invalid author name: {author_first} {author_last}")
                 return "Not Found"
             elif authors.shape[0] > 1:
+                # if multiple authors have been found, prompt for clarification
                 return (f"There are multiple authors found in the database: {f.format_list(authors)}. Which one did you mean?")
             else: 
-                
+                # get the titles of poems by the author
                 authors = pd.read_sql_query(f"SELECT Title FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
                 # ctx.info(f"User requested author {authors["Poet"][0]} under input: {author_first} {author_last}")
                 # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
@@ -62,17 +69,21 @@ def register_authors(mcp, url, engine):
         author_last: the last name of the author to search by. 
         author_first: Optional, the first name of the author to search by if specified."""
         with engine.connect() as conn, conn.begin():
+            # if first name has been provided, search using both first and last name
             if author_first != "":
                 authors = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             else: 
+            # otherwise search using just last name
                 authors = pd.read_sql_query(f"SELECT DISTINCT Poet FROM poemsf WHERE Poet LIKE \"%{author_last}%\"", conn)
             if authors.shape[0] == 0:
+            # if no authors have been found
                 logger.exception(f"poetry foundation invalid author name: {author_first} {author_last}")
                 return "Not Found"
             elif authors.shape[0] > 1:
+                # if multiple authors have been found, prompt for clarification
                 return (f"There are multiple authors found in the database: {f.format_list(authors)}. Which one did you mean?")
             else: 
-                
+                # get the titles of poems by the author
                 authors = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
                 # ctx.info(f"User requested author {authors["Poet"][0]} under input: {author_first} {author_last}")
                 # ctx.info(f"Related tags for {authors["Poet"][0]}: {f.format_tags(f.format_list(authors["Tags"]))}")
@@ -89,19 +100,23 @@ def register_poems(mcp, engine):
             """
         
         with engine.connect() as conn, conn.begin():
+            # search using title and optionally filter by author name
             if author_first != "":
+                # if first name is provided search using first name otherwise use only last name
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Title LIKE \"%{title}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             else:
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Title LIKE \"%{title}%\" AND Poet LIKE \"%{author_last}%\"", conn)
             if poe.shape[0] == 0:
+                # poem not found
                 logger.exception(f"poetry foundation invalid poem name: {title}")
                 logger.info(f"returned: {poe}")
                 return "Not Found"
             elif poe.shape[0] > 1:
+                # multiple poems found, prompt for clarification
                 return ("There are multiple poems found in the database: " + f.format_list(poe["Title"]) + ". Which one did you mean?")
             else:
                 # ctx.info(f"User requested poem, {poe["Title"][0]}, by poet, {poe["Poet"][0]}. Related tags are {f.format_tags([poe["Tags"][0]])}. Poem: {poe["Poem"][0]}")
-
+                # return poem as a singular entry
                 return f.format_entry(poe)
 
 
@@ -131,6 +146,7 @@ def register_poems(mcp, engine):
         author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. 
          tags: a theme, image, or topic. Can be auto-generated using conversation history. """
         with engine.connect() as conn, conn.begin():
+            # search using keyword in poem and optionally filter by author name
             if author_first != "":
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{keyword}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\" AND Tags LIKE \"%{tag}%\"", conn)
             else:
@@ -138,6 +154,7 @@ def register_poems(mcp, engine):
             if poe.shape[0] < 1:
                 logger.exception(f"poetry foundation invalid keyword: {keyword}")
                 return "Not Found"
+            # multiple entries allowed
             else:
                 # ctx.info(f"User requested poems, {f.format_list(poe["Title"])}. Related tags are {f.format_tags(f.format_list(poe["Tags"]))}.")
                 return f.format_entries(poe)
@@ -210,6 +227,7 @@ def register_tags(mcp, url, engine):
         author_last: Last name of the poet to search by. Can be auto-generated using conversation history.  
         author_first: Full first name of the poet to search by (if specified). Can be auto-generated using coversation history. """
         with engine.connect() as conn, conn.begin():
+            # search using tag and optionally filter by author name
             if author_first != "":
                 poe = pd.read_sql_query(f"SELECT * FROM poemsf WHERE Poem LIKE \"%{tag}%\" AND Poet LIKE \"%{author_last}%\" AND Poet LIKE \"%{author_first}%\"", conn)
             else:
