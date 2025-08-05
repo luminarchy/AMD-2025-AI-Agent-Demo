@@ -26,8 +26,8 @@ meow
       <ul>
         <li><a href="#examples">Examples</a></li>
       </ul></li>
-    <li><a href="#troubleshootinge">Troubleshooting</a></li>
-    <li><a href="#frequently-asked-questions">FAQ</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -237,7 +237,7 @@ Asking the AI agent for synonyms and response using the same poem from the previ
      command: ["mcpo", "--port", "8002", "--", "python", "server-name.py"]
     ```
     
-<!-- CONTACT -->
+<!-- Contact -->
 
 ## 🌟 Contact 🌟
 
