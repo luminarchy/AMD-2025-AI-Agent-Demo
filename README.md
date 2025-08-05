@@ -10,33 +10,33 @@ meow
   <summary>✨ Table of Contents ✨ </summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#star2-about-the-project-star2">About The Project</a>
       <ul>
-        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#sparkles-how-it-works-sparkles">How it Works</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#star2-getting-started-star2">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#sparkles-prerequisites-sparkles">Prerequisites</a></li>
+        <li><a href="#sparkles-installation-sparkles">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a>
+    <li><a href="#star2-usage-star2">Usage</a>
       <ul>
-        <li><a href="#examples">Examples</a></li>
+        <li><a href="#sparkles-examples-sparkles">Examples</a></li>
       </ul></li>
-    <li><a href="#troubleshooting">Troubleshooting</a></li>
-    <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#star2-troubleshooting-star2">Troubleshooting</a></li>
+    <li><a href="#star2-frequently-asked-questions-star2">Frequently Asked Questions</a></li>
+    <li><a href="#star2-contact-star2">Contact</a></li>
+    <li><a href="#star2-license-star2">License</a></li>
+    <li><a href="#star2-acknowledgments-star2">Acknowledgments</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 
-## 🌟 About The Project 🌟
+## :star2: About The Project :star2:
 
 Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. The  open-source framework works similar to REST API and provides an interface that allows models to interact with data and context, universalizing the way that AI agents integrate into systems. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also contains a poetry MCP server to demonstrate the utility of the agent.
 
@@ -44,7 +44,8 @@ See [Poetry MCP](mcp/README.md) for more information about the Poetry MCP server
 
 See [Base MCP](base-mcp/README.md) for more information about the Base MCP server. 
 
-### ✨ How it Works ✨
+<!-- HOW IT WORKS -->
+### :sparkles: How it Works :sparkles:
 
 * ![architecture](assets/arch.png)
 
@@ -58,16 +59,16 @@ The response from each tool that the AI agent calls is then fed back into the ag
 
 <!-- GETTING STARTED -->
 
-## 🌟 Getting Started 🌟
+## :star2: Getting Started :star2:
 
-### ✨ Prerequisites ✨
+### :sparkles: Prerequisites :sparkles:
 
 * **Linux**: see the [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems).
 * **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/ install-on-linux/en/latest/tutorial/quick-start.html).
 * **GPU**: AMD Instinct™ MI300X accelerator or [other ROCm-supported GPUs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html).
 * **Docker**: with Docker Compose - [install](https://docs.docker.com/engine/install/).
 
-### ✨ Installation ✨
+### :sparkles: Installation :sparkles:
 
 1. Clone the repo
    
@@ -118,7 +119,7 @@ The response from each tool that the AI agent calls is then fed back into the ag
    docker compose down
    ```
 
-## 🌟 Usage 🌟
+## :star2: Usage :star2:
 
 ✨ **If you are using the Poetry MCP Server**
 The Poetry mcp server code is set up in the `/mcp` directory which contains the scripts to run the MCP server as well as a separate README for the server contianing information about the recommended setup for Open WebUI.
@@ -138,7 +139,7 @@ This will allow you to use a singular model as two separate AI agents, ensuring 
 
 The MCP server should automatically connect to the running OpenWebUI image. If it does not, simply go to `settings` and add a new tool server with the server url.
 
-### ✨ Examples ✨
+### :sparkles: Examples :sparkles:
 
 This is the Open WebUI with the Poetry AI agent
 
@@ -168,7 +169,7 @@ Asking the AI agent for synonyms and response using the same poem from the previ
 
 * ![logs](assets/thesaurus.png)
 
-## 🌟 Troubleshooting 🌟
+## :star2: Troubleshooting :star2:
 
 * To view logs:
   Run:
@@ -217,7 +218,7 @@ Asking the AI agent for synonyms and response using the same poem from the previ
   * The conversation context may be too long. Try opening a new conversation.
 
 <!-- FAQ -->
-## 🌟 Frequently Asked Questions 🌟
+## :star2: Frequently Asked Questions :star2:
 > Why MCP?
   * Gen AI is powerful, but its knowledge base is shallow and only contians the information that it has been trained on or the information that the user provides it. This can cause the model to hallucinate, pulling from a variety of potentially misleading information sources and generating an answer that is either wildly inaccurate or gibberish, such as with the example of rhymes. The AI model does not know that it is wrong, because it does not have the information to tell it that it is wrong. MCP connects AI models to such an information source, giving it the *context* that it needs to provide accurate, helpful answers for specific and complex applications. These information sources can be databases or APIs. An AI agent can uses this context to conduct context specific tasks such as generating poetry feedback by referencing information about rhyme and meter and works by published poets to provide the most accurate, informated response. MCP also allows for the AI Model to connect to multiple information sources and tools, providing the information that allows the AI agent to choose which to use in a given situation.
   
@@ -239,14 +240,14 @@ Asking the AI agent for synonyms and response using the same poem from the previ
     
 <!-- Contact -->
 
-## 🌟 Contact 🌟
+## :star2: Contact :star2:
 
 Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
 
 Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
 
 <!-- License -->
-## 🌟 License 🌟
+## :star2: License :star2:
 
 The [Salesforce xLAM model](https://huggingface.co/Salesforce/Llama-xLAM-2-70b-fc-r) used in this project is created by Salesforce. 
 
@@ -255,7 +256,7 @@ See:
 
 <!-- ACKNOWLEDGMENTS -->
 
-## 🌟 Acknowledgments 🌟
+## :star2: Acknowledgments :star2:
 
 * [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
 * [the poetry foundation dataset](https://www.kaggle.com/datasets/tgdivy/poetry-foundation-poems)
