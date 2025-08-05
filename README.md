@@ -26,8 +26,10 @@ meow
       <ul>
         <li><a href="#examples">Examples</a></li>
       </ul></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#troubleshootinge">Troubleshooting</a></li>
+    <li><a href="#frequently-asked-questions">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -37,7 +39,9 @@ meow
 ## 🌟 About The Project 🌟
 
 Model Context Protocols (MCPs) have brought a new perspective on AI and Large Language Models (LLMs), emerging as a powerful tool able to connect multiple models and APIs to remote machines. The  open-source framework works similar to REST API and provides an interface that allows models to interact with data and context, universalizing the way that AI agents integrate into systems. This project demonstrates the capabilities of MCPs and how they can be used with AMD ROCm machines. The repository contains a Docker Compose file that uses vLLM to build an AI Agent that has function calling capabilities. It also contains a poetry MCP server to demonstrate the utility of the agent.
+
 See [Poetry MCP](mcp/README.md) for more information about the Poetry MCP server. 
+
 See [Base MCP](base-mcp/README.md) for more information about the Base MCP server. 
 
 ### ✨ How it Works ✨
@@ -214,16 +218,16 @@ Asking the AI agent for synonyms and response using the same poem from the previ
 
 <!-- FAQ -->
 ## 🌟 Frequently Asked Questions 🌟
-* Why MCP?
+> Why MCP?
   * Gen AI is powerful, but its knowledge base is shallow and only contians the information that it has been trained on or the information that the user provides it. This can cause the model to hallucinate, pulling from a variety of potentially misleading information sources and generating an answer that is either wildly inaccurate or gibberish, such as with the example of rhymes. The AI model does not know that it is wrong, because it does not have the information to tell it that it is wrong. MCP connects AI models to such an information source, giving it the *context* that it needs to provide accurate, helpful answers for specific and complex applications. These information sources can be databases or APIs. An AI agent can uses this context to conduct context specific tasks such as generating poetry feedback by referencing information about rhyme and meter and works by published poets to provide the most accurate, informated response. MCP also allows for the AI Model to connect to multiple information sources and tools, providing the information that allows the AI agent to choose which to use in a given situation.
   
-* What are the applications of this project?
+> What are the applications of this project?
   * The Poetry MCP server is just a fun that I had in order to demonstrate the capabilites of MCP and agentic AI on AMD ROCm GPUs that I thought could aid young writers in their creative journey. But this framework can be easily adapted to any data-based application such as to aid information systems or manufacturing. The underlying code connects to an Excel file and uses SQLite for quick and easy queries, so there is no need to build an API. I have provided a starter MCP server for a general database in the folder [Base-MCP](/base-mcp). This server contains tools to query and insert into a database. The Poetry MCP server also includes examples of structured model sampling in the file [poemtools.py](mcp/poemtools.py), which can be used to turn general prompts into specific guided requests to the AI Model.
 
-* Can this application be run locally? What if I have super cool gpus?
+> Can this application be run locally? What if I have super cool gpus?
   * Short answer, no. This application wasn't meant to run on a local computer, since it needs a large model context length. This particular applicatio was built using a total of 3 GPUs on a MI300X machine with the Salesforce XLAM model using two GPUs at 95% capacity. It would be both easier and better to have one instance of the application running with a large 70B model with multiple remote connections. The MCP sever also is able to handle concurrent requests for this application. However, this model can be run a smaller 1B model for testing and experimentation
 
-* How can I use a different MCP server?
+> How can I use a different MCP server?
   * Replace the MCP service in the Docker Container with the necessary parameters for the MCP server. If you are hosting your own server, make sure to change the Dockerfile to copy your server files to the container files by using `COPY <filename>` and ensure that all dependencies are listed in the `requirements.txt` file. In the Docker Compose, change the command parameter to be
     ```yaml
      command: ["mcpo", "--port", "8002", "--", "<cmd>", "<for your server>"]
@@ -241,17 +245,13 @@ Amy Suo - amysuwoah@gmail.com / amy.suo@amd.com / as331@rice.edu
 
 Project Link: [https://github.com/luminarchy/AMD-2025-AI-Agent-Demo](https://github.com/luminarchy/AMD-2025-AI-Agent-Demo)
 
-<!-- Licensing -->
-## 🌟 Licensing 🌟
+<!-- License -->
+## 🌟 License 🌟
 
 The [Salesforce xLAM model](https://huggingface.co/Salesforce/Llama-xLAM-2-70b-fc-r) used in this project is created by Salesforce. 
 
-@article{prabhakar2025apigen,
-  title={APIGen-MT: Agentic PIpeline for Multi-Turn Data Generation via Simulated Agent-Human Interplay},
-  author={Prabhakar, Akshara and Liu, Zuxin and Zhu, Ming and Zhang, Jianguo and Awalgaonkar, Tulika and Wang, Shiyu and Liu, Zhiwei and Chen, Haolin and Hoang, Thai and others},
-  journal={arXiv preprint arXiv:2504.03601},
-  year={2025}
-}
+See: 
+[xLAM](https://arxiv.org/abs/2504.03601)
 
 <!-- ACKNOWLEDGMENTS -->
 
