@@ -4,6 +4,8 @@ import pandas as pd
 from sqlalchemy.ext.asyncio import create_async_engine
 from functools import partial
 import format as f
+from typing import Annotated
+from pydantic import Field
 import os
 
 logger = logging.getLogger(__name__)
@@ -198,11 +200,20 @@ def register_select(mcp, engine, parameters):
 
 def register_insert(mcp, engine, parameters):
     @mcp.tool()
-    async def put_entry(values: dict, ctx: Context): 
-        """Inserts a singular entry into the database
-            values: dictionary with the values of the entry to be entered in the database with keys corresponding to parameter names
+    async def get_parameters():
+        """Retrieves the parameter names in the databases. Can be used to reference accpetable parameter names. 
+            returns: the database column names
             """
-        
+        return parameters
+    
+
+    @mcp.tool()
+    async def put_entry(entry:  Annotated[dict, Field(description=f"Entry that the user wants to add to the database. Maps parameters to values. ")], ctx: Annotated[Context, Field(description="MCP Context")]): 
+    #async def put_entry(entry: dict, ctx: Context):
+        """Inserts a singular entry into the database
+            entry: the entry to be added to the database. 
+            """
+        values = entry
         async with engine.connect() as conn, conn.begin():
             # intialize empty dataframe
             df = {}
@@ -211,7 +222,8 @@ def register_insert(mcp, engine, parameters):
                 # if inputted dictionary does not have a value for a parameter, set that value in dataframe to None
                 df[parameters[p]] = [values.get(parameters[p], None)]
                 # avoid any extra parameters that the dictionary may provide
-                
+            if len(df) == 0:
+                return f"Input to put_entry requires at least one key value pair that corresponds with one of the parameter values. Accepted parameter values are: {parameters}"
 
             #     sql += f"'{values.get(parameters[p], None)}'"
             #     if p != len(parameters) - 1:

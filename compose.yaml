@@ -44,28 +44,28 @@ services:
       #         --enable-auto-tool-choice
       #         --tool-parser-plugin ./xlam_tool_call_parser.py
       #         --tool-call-parser xlam
-  kokoro-fastapi:
-    ports:
-      - 8880:8880
-    image: kokoro-fastapi-rocm
-    devices:
-      - /dev/kfd
-      - /dev/dri
-    security_opt:
-      - seccomp:unconfined
-    ipc: "host"
-    expose:
-      - "3000"
-    group_add:
-      - "video"
-      - "render"
-      - "audio"
-    cap_add:
-      - SYS_PTRACE
-    environment: 
-      HIP_VISIBLE_DEVICES: 1
-    restart: always
-    command: ["python", "-m", "uvicorn", "api.src.main:app", "--host", "0.0.0.0", "--port", "8880", "--log-level", "debug"]
+  # kokoro-fastapi:
+  #   ports:
+  #     - 8880:8880
+  #   image: kokoro-fastapi-rocm
+  #   devices:
+  #     - /dev/kfd
+  #     - /dev/dri
+  #   security_opt:
+  #     - seccomp:unconfined
+  #   ipc: "host"
+  #   expose:
+  #     - "3000"
+  #   group_add:
+  #     - "video"
+  #     - "render"
+  #     - "audio"
+  #   cap_add:
+  #     - SYS_PTRACE
+  #   environment: 
+  #     HIP_VISIBLE_DEVICES: 1
+  #   restart: always
+  #   command: ["python", "-m", "uvicorn", "api.src.main:app", "--host", "0.0.0.0", "--port", "8880", "--log-level", "debug"]
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -109,7 +109,30 @@ services:
       DB_ID: -1 # index of unique ID column
       NUM_COLS: 3 # number of data columns in dataset
       
-    command: ["mcpo", "--port", "8002", "--", "python", "server.py"]
+    command: ["mcpo", "--port", "8002", "--", "python", "poem.py"]
+  
+  # mcp2:
+  #   build:
+  #     context: .
+  #     # change to Dockerfile.base if using base mcp
+  #     dockerfile: Dockerfile.base
+  #   ports: 
+  #     - "8010:8010"
+  #   depends_on: 
+  #     - vllm
+  #   environment:
+  #     # Poetry MCP env vars
+  #     OPENAI_API_BASE_URL: "http://vllm:8001/v1" # connection to vllm instance for chat completions 
+  #     OPENAI_KEY: "EMPTY" # OPENAI key
+  #     OPENAI_MODEL: "Salesforce/Llama-xLAM-2-70b-fc-r" # model to use for chat completions
+
+  #     # base MCP env vars 
+  #     DB_NAME: "database" # database name to be used (can be anything)
+  #     DB_FILE: "database.xlsx" # filename for the database
+  #     DB_ID: -1 # index of unique ID column
+  #     NUM_COLS: 3 # number of data columns in dataset
+      
+  #   command: ["mcpo", "--port", "8010", "--", "python", "server.py"]
 
 
 
