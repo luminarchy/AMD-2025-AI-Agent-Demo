@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1> ⭐  AMD AI Agent ⭐ </h1>
-meow
+
 <div align="left">
 
 <!-- TABLE OF CONTENTS -->
